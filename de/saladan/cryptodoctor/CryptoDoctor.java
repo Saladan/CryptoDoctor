@@ -8,7 +8,7 @@ import static java.util.logging.Logger.getLogger;
 /**
  *
  * @author Saladan
- * @version planning-1.1-3
+ * @version v1.1.0-pre-alpha
  */
 public class CryptoDoctor {
 
