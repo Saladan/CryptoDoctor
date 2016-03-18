@@ -20,7 +20,6 @@ import javax.swing.JToolBar;
 import javax.swing.border.LineBorder;
 import org.jdesktop.layout.GroupLayout;
 import static org.jdesktop.layout.GroupLayout.CENTER;
-import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
 /**
  *
@@ -35,7 +34,7 @@ public class CPanel extends JPanel {
     ImageIcon iClose, iOpen;
     boolean opened;
     final Class[] crypts = new Class[]{null, CCaesar.class, CVigenere.class};
-    final String[] names = new String[]{"<bitte wählen>", "Cäsar-Verschlüsselung", "Vigenére-Verschlüsselung"};
+    final String[] names = new String[]{"<bitte wählen>", "Cäsar-Verschlüsselung", "Vigenère-Verschlüsselung"};
 
     /**
      *
