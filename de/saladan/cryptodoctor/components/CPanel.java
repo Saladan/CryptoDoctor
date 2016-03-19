@@ -1,7 +1,8 @@
 package de.saladan.cryptodoctor.components;
 
 import de.saladan.cryptodoctor.Info;
-import de.saladan.cryptodoctor.components.crypt.*;
+import static de.saladan.cryptodoctor.Info.CIPHER_CLASSES;
+import static de.saladan.cryptodoctor.Info.CIPHER_NAMES;
 import static java.awt.Color.black;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -33,15 +34,13 @@ public class CPanel extends JPanel {
     JButton close;
     ImageIcon iClose, iOpen;
     boolean opened;
-    final Class[] crypts = new Class[]{null, CCaesar.class, CVigenere.class};
-    final String[] names = new String[]{"<bitte wählen>", "Cäsar-Verschlüsselung", "Vigenère-Verschlüsselung"};
 
     /**
      *
      */
     public CPanel() {
         setBorder(new LineBorder(black));
-        final JComboBox<String> combo = new JComboBox<>(names);
+        final JComboBox<String> combo = new JComboBox<>(CIPHER_NAMES);
         combo.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -52,7 +51,7 @@ public class CPanel extends JPanel {
                         }
                         int index = combo.getSelectedIndex();
                         boolean exists = index > 0;
-                        content = exists ? (CContent) crypts[index].newInstance() : null;
+                        content = exists ? (CContent) CIPHER_CLASSES[index].newInstance() : null;
                         close.setEnabled(exists);
                         update(exists);
                     } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {

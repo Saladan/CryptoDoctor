@@ -8,6 +8,9 @@ import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import static org.jdesktop.layout.GroupLayout.LEADING;
 
 /**
@@ -24,11 +27,10 @@ public class CVigenere extends CContent {
      *
      */
     public CVigenere() {
-
         editC = new JTextField();
         labelC = new JLabel();
 
-        editC.setText("A");
+        editC.setDocument(new UpperCaseDocument());
 
         labelC.setText("Verschlüsselungswort:");
 
@@ -50,6 +52,7 @@ public class CVigenere extends CContent {
 
     /**
      * Encrypts the given text width specific Encryption rules.
+     *
      * @param text The text to be encrypted
      * @return The encrypted text
      */
@@ -65,6 +68,7 @@ public class CVigenere extends CContent {
 
     /**
      * Decrypts the given text with specific Decryption rules.
+     *
      * @param text The text to be decrypted
      * @return The decrypted text
      */
@@ -110,6 +114,23 @@ public class CVigenere extends CContent {
             }
         }
         return true;
+    }
+
+    private class UpperCaseDocument extends PlainDocument {
+
+        UpperCaseDocument() {
+        }
+
+        @Override
+        public void insertString(int offset, String s, AttributeSet attributeSet) throws BadLocationException {
+            s = s.toUpperCase();
+            for (char c : s.toCharArray()) {
+                if (c < 'A' || c > 'Z') {
+                    return;
+                }
+            }
+            super.insertString(offset, s, attributeSet);
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package de.saladan.cryptodoctor;
 
 import de.saladan.cryptodoctor.components.CFrame;
+import de.saladan.cryptodoctor.components.crypt.*;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 
@@ -11,7 +12,16 @@ import static java.util.logging.Logger.getLogger;
 public class Info {
 
     private static final Logger LOG = getLogger(Info.class.getName());
-    
+
+    /**
+     * Classes of all Ciphers that have been implemented
+     */
+    public static final Class[] CIPHER_CLASSES = new Class[]{null, CCaesar.class, CVigenere.class, CBinary.class};
+
+    /**
+     * Names of all Ciphers that have been implemented
+     */
+    public static final String[] CIPHER_NAMES = new String[]{"<bitte wählen>", "Cäsar-Verschlüsselung", "Vigenère-Verschlüsselung", "Binäre Verchlüsselung (XOR)"};
     /**
      * The Error Message in case of an Exception
      */
