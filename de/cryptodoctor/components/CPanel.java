@@ -71,19 +71,19 @@ public class CPanel extends JPanel {
             }
         });
         Dimension size = new Dimension(20, 20);
-        moveUp.setIcon(new ImageIcon(getClass().getClassLoader().getResource("de/saladan/cryptodoctor/graphic/up.png")));
+        moveUp.setIcon(new ImageIcon(getClass().getClassLoader().getResource("de/cryptodoctor/graphic/up.png")));
         moveUp.setMinimumSize(size);
         moveUp.setPreferredSize(size);
         moveUp.setMaximumSize(size);
-        moveDown.setIcon(new ImageIcon(getClass().getClassLoader().getResource("de/saladan/cryptodoctor/graphic/down.png")));
+        moveDown.setIcon(new ImageIcon(getClass().getClassLoader().getResource("de/cryptodoctor/graphic/down.png")));
         moveDown.setMinimumSize(size);
         moveDown.setPreferredSize(size);
         moveDown.setMaximumSize(size);
         close.setMinimumSize(size);
         close.setPreferredSize(size);
         close.setMaximumSize(size);
-        iClose = new ImageIcon(getClass().getClassLoader().getResource("de/saladan/cryptodoctor/graphic/left.png"));
-        iOpen = new ImageIcon(getClass().getClassLoader().getResource("de/saladan/cryptodoctor/graphic/right.png"));
+        iClose = new ImageIcon(getClass().getClassLoader().getResource("de/cryptodoctor/graphic/left.png"));
+        iOpen = new ImageIcon(getClass().getClassLoader().getResource("de/cryptodoctor/graphic/right.png"));
         JToolBar control = new JToolBar();
         control.setFloatable(false);
         control.setBorder(null);

@@ -77,7 +77,7 @@ public class CFrame extends JFrame {
                 addCrypt(new CPanel());
             }
         });
-        bEnter.setIcon(new ImageIcon(getClass().getClassLoader().getResource("de/saladan/cryptodoctor/graphic/enter.png")));
+        bEnter.setIcon(new ImageIcon(getClass().getClassLoader().getResource("de/cryptodoctor/graphic/enter.png")));
         bEnter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
