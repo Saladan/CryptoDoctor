@@ -1,8 +1,8 @@
-package de.saladan.cryptodoctor;
+package de.cryptodoctor;
 
-import static de.saladan.cryptodoctor.Info.ERROR;
-import static de.saladan.cryptodoctor.Info.frame;
-import static de.saladan.cryptodoctor.Info.running;
+import static de.cryptodoctor.Info.ERROR;
+import static de.cryptodoctor.Info.frame;
+import static de.cryptodoctor.Info.running;
 import static java.lang.System.exit;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;

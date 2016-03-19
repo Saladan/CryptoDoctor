@@ -1,7 +1,9 @@
-package de.saladan.cryptodoctor.components;
+package de.cryptodoctor.components;
 
-import de.saladan.cryptodoctor.Info;
-import de.saladan.cryptodoctor.components.crypt.*;
+import de.cryptodoctor.Info;
+import static de.cryptodoctor.Info.CIPHER_CLASSES;
+import static de.cryptodoctor.Info.CIPHER_NAMES;
+import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -20,7 +22,6 @@ import javax.swing.JToolBar;
 import javax.swing.border.LineBorder;
 import org.jdesktop.layout.GroupLayout;
 import static org.jdesktop.layout.GroupLayout.CENTER;
-import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
 /**
  *
@@ -34,15 +35,13 @@ public class CPanel extends JPanel {
     JButton close;
     ImageIcon iClose, iOpen;
     boolean opened;
-    final Class[] crypts = new Class[]{null, CCaesar.class, CVigenere.class};
-    final String[] names = new String[]{"<bitte wählen>", "Cäsar-Verschlüsselung", "Vigenére-Verschlüsselung"};
 
     /**
      *
      */
     public CPanel() {
         setBorder(new LineBorder(black));
-        final JComboBox<String> combo = new JComboBox<>(names);
+        final JComboBox<String> combo = new JComboBox<>(CIPHER_NAMES);
         combo.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -53,7 +52,7 @@ public class CPanel extends JPanel {
                         }
                         int index = combo.getSelectedIndex();
                         boolean exists = index > 0;
-                        content = exists ? (CContent) crypts[index].newInstance() : null;
+                        content = exists ? (CContent) CIPHER_CLASSES[index].newInstance() : null;
                         close.setEnabled(exists);
                         update(exists);
                     } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {
@@ -73,19 +72,19 @@ public class CPanel extends JPanel {
             }
         });
         Dimension size = new Dimension(20, 20);
-        moveUp.setIcon(new ImageIcon(getClass().getClassLoader().getResource("de/saladan/cryptodoctor/graphic/up.png")));
+        moveUp.setIcon(createIcon("icons:up"));
         moveUp.setMinimumSize(size);
         moveUp.setPreferredSize(size);
         moveUp.setMaximumSize(size);
-        moveDown.setIcon(new ImageIcon(getClass().getClassLoader().getResource("de/saladan/cryptodoctor/graphic/down.png")));
+        moveDown.setIcon(createIcon("icons:down"));
         moveDown.setMinimumSize(size);
         moveDown.setPreferredSize(size);
         moveDown.setMaximumSize(size);
         close.setMinimumSize(size);
         close.setPreferredSize(size);
         close.setMaximumSize(size);
-        iClose = new ImageIcon(getClass().getClassLoader().getResource("de/saladan/cryptodoctor/graphic/left.png"));
-        iOpen = new ImageIcon(getClass().getClassLoader().getResource("de/saladan/cryptodoctor/graphic/right.png"));
+        iClose = createIcon("icons:left");
+        iOpen = createIcon("icons:right");
         JToolBar control = new JToolBar();
         control.setFloatable(false);
         control.setBorder(null);

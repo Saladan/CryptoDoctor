@@ -8,8 +8,8 @@ Doppelklicken auf die CryptoDoctor-version.jar Datei.</br>
 In das Terminal den Befehl eingeben "java -jar [Pfad zur CryptoDoctor-version.jar]</br>
 3. Terminal zum Starten des Codes nutzen</br>
 Im Terminal zum Pfad des Codes wechseln ("cd [Pfad]")</br>
-Befehl eingeben "javac de/saladan/cryptodoctor/Cryptodoctor.java"</br>
-Befehl eingeben "java de/saladan/cryptodoctor/CryptoDoctor"</br>
+Befehl eingeben "javac de/cryptodoctor/Cryptodoctor.java"</br>
+Befehl eingeben "java de/cryptodoctor/CryptoDoctor"</br>
 </br>
 -----------------------------------------------------------------------------------------------------------------------</br>
 </br>
@@ -23,5 +23,5 @@ Double-click on "CryptoDoctor-version.jar" this will (hopefully) cause the JRE t
 Simply type "java -jar [Path to CryptoDoctor-version.jar]" into your Command Line and press the Enter Button.</br>
 3. Run from Code</br>
 CD to source folder ("cd [path]")</br>
-Type "javac de/saladan/cryptodoctor/Cryptodoctor.java"</br>
-Type "java de/saladan/cryptodoctor/CryptoDoctor"</br>
+Type "javac de/cryptodoctor/Cryptodoctor.java"</br>
+Type "java de/cryptodoctor/CryptoDoctor"</br>

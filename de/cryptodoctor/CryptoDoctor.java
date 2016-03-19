@@ -1,14 +1,14 @@
-package de.saladan.cryptodoctor;
+package de.cryptodoctor;
 
-import static de.saladan.cryptodoctor.Info.frame;
-import de.saladan.cryptodoctor.components.CFrame;
+import static de.cryptodoctor.Info.frame;
+import de.cryptodoctor.components.CFrame;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 
 /**
  *
  * @author Saladan
- * @version v1.1.1-pre-alpha
+ * @version v2.1.1-pre-alpha
  */
 public class CryptoDoctor {
 
