@@ -58,7 +58,7 @@ public class CBinary extends CContent {
      */
     @Override
     public String encrypt(String text) {
-        return crypt(text.toCharArray(), new Byte("24"));
+        return crypt(text.toCharArray(), getByte(editC.getText().toCharArray()));
     }
 
     /**
@@ -69,7 +69,7 @@ public class CBinary extends CContent {
      */
     @Override
     public String decrypt(String text) {
-        return crypt(text.toCharArray(), new Byte("24"));
+        return crypt(text.toCharArray(), getByte(editC.getText().toCharArray()));
     }
 
     String crypt(char[] raw, byte c) {
@@ -77,6 +77,15 @@ public class CBinary extends CContent {
             raw[i] ^= c;
         }
         return new String(raw);
+    }
+    
+    byte getByte(char[] raw) {
+        byte c = 0;
+        for (int i = 0; i < 8; i++) {
+            c += raw[7 - i] == '1' ? Math.pow(2, i) : 0;
+        }
+        System.out.println(c);
+        return c;
     }
 
     /**
