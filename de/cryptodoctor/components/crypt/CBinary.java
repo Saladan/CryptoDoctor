@@ -3,6 +3,7 @@ package de.cryptodoctor.components.crypt;
 import de.cryptodoctor.components.CContent;
 import static java.lang.Math.min;
 import static java.lang.Short.MAX_VALUE;
+import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 import javax.swing.JLabel;
@@ -49,11 +50,23 @@ public class CBinary extends CContent {
                 .add(0, 0, MAX_VALUE));
     }
 
+    /**
+     * Encrypts the given text width specific Encryption rules.
+     *
+     * @param text The text to be encrypted
+     * @return The encrypted text
+     */
     @Override
     public String encrypt(String text) {
         return crypt(text.toCharArray(), new Byte("24"));
     }
 
+    /**
+     * Decrypts the given text with specific Decryption rules.
+     *
+     * @param text The text to be decrypted
+     * @return The decrypted text
+     */
     @Override
     public String decrypt(String text) {
         return crypt(text.toCharArray(), new Byte("24"));
@@ -66,8 +79,18 @@ public class CBinary extends CContent {
         return new String(raw);
     }
 
+    /**
+     * Indicates weather the Encryption Field is valid or invalid
+     *
+     * @return true if field is valid, false otherwise
+     */
     @Override
     public boolean cryptIsValid() {
+        try {
+            editC.getDocument().insertString(0, "00000000", null);
+        } catch (BadLocationException ex) {
+            getLogger(CBinary.class.getName()).log(SEVERE, null, ex);
+        }
         return true;
     }
 
@@ -78,7 +101,7 @@ public class CBinary extends CContent {
 
         @Override
         public void insertString(int offset, String s, AttributeSet attributeSet) throws BadLocationException {
-            s = s.substring(0, min(8 - offset, s.length()));
+            s = s.substring(0, min(8 - editC.getText().length(), s.length()));
             for (char c : s.toCharArray()) {
                 if (c < '0' || c > '1') {
                     return;

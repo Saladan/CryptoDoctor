@@ -58,6 +58,7 @@ public class CCaesar extends CContent {
 
     /**
      * Encrypts the given text width specific Encryption rules.
+     *
      * @param text The text to be encrypted
      * @return The encrypted text
      */
@@ -68,6 +69,7 @@ public class CCaesar extends CContent {
 
     /**
      * Decrypts the given text with specific Decryption rules.
+     *
      * @param text The text to be decrypted
      * @return The decrypted text
      */
@@ -88,6 +90,11 @@ public class CCaesar extends CContent {
         return new String(raw);
     }
 
+    /**
+     * Indicates weather the Encryption Field is valid or invalid
+     *
+     * @return true if field is valid, false otherwise
+     */
     @Override
     public boolean cryptIsValid() {
         return true;

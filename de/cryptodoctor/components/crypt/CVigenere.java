@@ -99,6 +99,11 @@ public class CVigenere extends CContent {
         return new String(raw);
     }
 
+    /**
+     * Indicates weather the Encryption Field is valid or invalid
+     *
+     * @return true if field is valid, false otherwise
+     */
     @Override
     public boolean cryptIsValid() {
         if (editC.getText().trim().isEmpty()) {

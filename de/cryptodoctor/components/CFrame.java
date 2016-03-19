@@ -1,6 +1,7 @@
 package de.cryptodoctor.components;
 
 import de.cryptodoctor.Info;
+import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
@@ -77,7 +77,7 @@ public class CFrame extends JFrame {
                 addCrypt(new CPanel());
             }
         });
-        bEnter.setIcon(new ImageIcon(getClass().getClassLoader().getResource("de/cryptodoctor/graphic/enter.png")));
+        bEnter.setIcon(createIcon("icons:enter"));
         bEnter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
