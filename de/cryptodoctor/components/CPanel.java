@@ -1,8 +1,8 @@
-package de.saladan.cryptodoctor.components;
+package de.cryptodoctor.components;
 
-import de.saladan.cryptodoctor.Info;
-import static de.saladan.cryptodoctor.Info.CIPHER_CLASSES;
-import static de.saladan.cryptodoctor.Info.CIPHER_NAMES;
+import de.cryptodoctor.Info;
+import static de.cryptodoctor.Info.CIPHER_CLASSES;
+import static de.cryptodoctor.Info.CIPHER_NAMES;
 import static java.awt.Color.black;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

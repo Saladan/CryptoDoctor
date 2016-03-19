@@ -1,6 +1,6 @@
-package de.saladan.cryptodoctor.components.crypt;
+package de.cryptodoctor.components.crypt;
 
-import de.saladan.cryptodoctor.components.CContent;
+import de.cryptodoctor.components.CContent;
 import static java.lang.Short.MAX_VALUE;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;

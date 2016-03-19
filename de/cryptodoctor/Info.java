@@ -1,7 +1,9 @@
-package de.saladan.cryptodoctor;
+package de.cryptodoctor;
 
-import de.saladan.cryptodoctor.components.CFrame;
-import de.saladan.cryptodoctor.components.crypt.*;
+import de.cryptodoctor.components.crypt.CBinary;
+import de.cryptodoctor.components.crypt.CCaesar;
+import de.cryptodoctor.components.crypt.CVigenere;
+import de.cryptodoctor.components.CFrame;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 

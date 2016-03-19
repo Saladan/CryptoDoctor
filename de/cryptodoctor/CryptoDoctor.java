@@ -1,7 +1,7 @@
-package de.saladan.cryptodoctor;
+package de.cryptodoctor;
 
-import static de.saladan.cryptodoctor.Info.frame;
-import de.saladan.cryptodoctor.components.CFrame;
+import static de.cryptodoctor.Info.frame;
+import de.cryptodoctor.components.CFrame;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 

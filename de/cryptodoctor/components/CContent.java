@@ -1,4 +1,4 @@
-package de.saladan.cryptodoctor.components;
+package de.cryptodoctor.components;
 
 import javax.swing.JPanel;
 

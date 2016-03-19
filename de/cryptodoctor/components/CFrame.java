@@ -1,6 +1,6 @@
-package de.saladan.cryptodoctor.components;
+package de.cryptodoctor.components;
 
-import de.saladan.cryptodoctor.Info;
+import de.cryptodoctor.Info;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
