@@ -3,7 +3,6 @@ package de.cryptodoctor.components.crypt;
 import de.cryptodoctor.components.CContent;
 import static java.lang.Math.min;
 import static java.lang.Short.MAX_VALUE;
-import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 import javax.swing.JLabel;
@@ -58,7 +57,7 @@ public class CBinary extends CContent {
      */
     @Override
     public String encrypt(String text) {
-        return crypt(text.toCharArray(), getByte(editC.getText().toCharArray()));
+        return crypt(text.toCharArray(), getLong(editC.getText().toCharArray()), editC.getText().length());
     }
 
     /**
@@ -69,22 +68,28 @@ public class CBinary extends CContent {
      */
     @Override
     public String decrypt(String text) {
-        return crypt(text.toCharArray(), getByte(editC.getText().toCharArray()));
+        return crypt(text.toCharArray(), getLong(editC.getText().toCharArray()), editC.getText().length());
     }
 
-    String crypt(char[] raw, byte c) {
+    String crypt(char[] raw, long c, int length) {
+        int pos = 0;
         for (int i = 0; i < raw.length; i++) {
-            raw[i] ^= c;
+            for (int j = 0; j < 8; j++) {
+                raw[i] ^= ((c & (1 << pos)) >> pos) << j;
+                pos++;
+                if (pos == length) {
+                    pos = 0;
+                }
+            }
         }
         return new String(raw);
     }
-    
-    byte getByte(char[] raw) {
+
+    long getLong(char[] raw) {
         byte c = 0;
-        for (int i = 0; i < 8; i++) {
-            c += raw[7 - i] == '1' ? Math.pow(2, i) : 0;
+        for (int i = 0; i < raw.length; i++) {
+            c += raw[raw.length - 1 - i] == '1' ? 1 << i : 0;
         }
-        System.out.println(c);
         return c;
     }
 
@@ -95,12 +100,7 @@ public class CBinary extends CContent {
      */
     @Override
     public boolean cryptIsValid() {
-        try {
-            editC.getDocument().insertString(0, "00000000", null);
-        } catch (BadLocationException ex) {
-            getLogger(CBinary.class.getName()).log(SEVERE, null, ex);
-        }
-        return true;
+        return !editC.getText().isEmpty();
     }
 
     private class BinaryDocument extends PlainDocument {
@@ -110,7 +110,10 @@ public class CBinary extends CContent {
 
         @Override
         public void insertString(int offset, String s, AttributeSet attributeSet) throws BadLocationException {
-            s = s.substring(0, min(8 - editC.getText().length(), s.length()));
+            s = s.substring(0, min(63 - editC.getText().length(), s.length()));
+            if (s.length() == 0) {
+                return;
+            }
             for (char c : s.toCharArray()) {
                 if (c < '0' || c > '1') {
                     return;
