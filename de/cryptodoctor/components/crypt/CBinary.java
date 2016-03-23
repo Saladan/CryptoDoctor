@@ -119,6 +119,7 @@ public class CBinary extends CContent {
                     return;
                 }
             }
+            doLayout();
             super.insertString(offset, s, attributeSet);
         }
     }

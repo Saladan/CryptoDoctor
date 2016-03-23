@@ -134,6 +134,7 @@ public class CVigenere extends CContent {
                     return;
                 }
             }
+            doLayout();
             super.insertString(offset, s, attributeSet);
         }
     }
