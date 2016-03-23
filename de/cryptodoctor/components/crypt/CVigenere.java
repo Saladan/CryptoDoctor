@@ -1,7 +1,6 @@
 package de.cryptodoctor.components.crypt;
 
 import de.cryptodoctor.components.CContent;
-import static java.lang.Short.MAX_VALUE;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -12,6 +11,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 import static org.jdesktop.layout.GroupLayout.LEADING;
+import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
 /**
  *
@@ -44,10 +44,10 @@ public class CVigenere extends CContent {
                 .add(6, 6, 6));
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .add(12, 12, 12)
-                .add(labelC)
+                .add(labelC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
                 .add(3, 3, 3)
-                .add(editC)
-                .add(0, 0, MAX_VALUE));
+                .add(editC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
+                .add(6, 6, 6));
     }
 
     /**
@@ -134,6 +134,7 @@ public class CVigenere extends CContent {
                     return;
                 }
             }
+            doLayout();
             super.insertString(offset, s, attributeSet);
         }
     }
