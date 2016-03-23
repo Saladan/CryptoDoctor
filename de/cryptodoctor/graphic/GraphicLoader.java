@@ -6,6 +6,7 @@
 package de.cryptodoctor.graphic;
 
 import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 import javax.swing.ImageIcon;
 
 /**
@@ -14,7 +15,7 @@ import javax.swing.ImageIcon;
  */
 public class GraphicLoader {
 
-    private static final Logger LOG = Logger.getLogger(GraphicLoader.class.getName());
+    private static final Logger LOG = getLogger(GraphicLoader.class.getName());
 
     /**
      * Creates an Icon based on the given location. The global Location
