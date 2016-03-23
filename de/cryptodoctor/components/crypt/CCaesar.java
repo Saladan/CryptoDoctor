@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.jdesktop.layout.GroupLayout;
 import static org.jdesktop.layout.GroupLayout.LEADING;
 import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
@@ -24,7 +25,6 @@ public class CCaesar extends CContent {
      *
      */
     public CCaesar() {
-
         sliderC = new JSlider();
         labelC = new JLabel();
 
@@ -40,7 +40,7 @@ public class CCaesar extends CContent {
 
         labelC.setText("Verschiebungsweite:   A = A");
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .add(6, 6, 6)
@@ -54,6 +54,7 @@ public class CCaesar extends CContent {
                 .add(3, 3, 3)
                 .add(sliderC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
                 .add(6, 6, 6));
+        super.initSize(21 + labelC.getPreferredSize().height + sliderC.getPreferredSize().height);
     }
 
     /**

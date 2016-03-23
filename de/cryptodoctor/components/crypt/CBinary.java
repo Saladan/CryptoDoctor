@@ -1,6 +1,7 @@
 package de.cryptodoctor.components.crypt;
 
 import de.cryptodoctor.components.CContent;
+import java.awt.Dimension;
 import static java.lang.Math.min;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
@@ -9,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
+import org.jdesktop.layout.GroupLayout;
 import static org.jdesktop.layout.GroupLayout.LEADING;
 import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
@@ -33,7 +35,7 @@ public class CBinary extends CContent {
 
         labelC.setText("Binärer Schlüssel:");
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .add(6, 6, 6)
@@ -47,6 +49,7 @@ public class CBinary extends CContent {
                 .add(3, 3, 3)
                 .add(editC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
                 .add(6, 6, 6));
+        super.initSize(21 + labelC.getPreferredSize().height + editC.getPreferredSize().height);
     }
 
     /**
@@ -119,7 +122,6 @@ public class CBinary extends CContent {
                     return;
                 }
             }
-            doLayout();
             super.insertString(offset, s, attributeSet);
         }
     }

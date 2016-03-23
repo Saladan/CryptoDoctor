@@ -28,7 +28,7 @@ public class Run implements Runnable {
         } catch (Exception e) {
             LOG.log(SEVERE, ERROR, e);
             LOG.log(SEVERE, "Stopping all activities...");
+            exit(1);
         }
-        exit(1);
     }
 }
