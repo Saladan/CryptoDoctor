@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
+import org.jdesktop.layout.GroupLayout;
 import static org.jdesktop.layout.GroupLayout.LEADING;
 import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
@@ -34,7 +35,7 @@ public class CVigenere extends CContent {
 
         labelC.setText("Verschlüsselungswort:");
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .add(6, 6, 6)
@@ -48,6 +49,7 @@ public class CVigenere extends CContent {
                 .add(3, 3, 3)
                 .add(editC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
                 .add(6, 6, 6));
+        super.initSize(21 + labelC.getPreferredSize().height + editC.getPreferredSize().height);
     }
 
     /**
