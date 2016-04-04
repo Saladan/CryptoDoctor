@@ -93,6 +93,11 @@ public class CPanel extends JPanel {
         control.add(moveDown);
         control.add(close);
         menu = new JPanel();
+        size = new Dimension(0, 25);
+        menu.setMinimumSize(size);
+        menu.setPreferredSize(size);
+        size = new Dimension(MAX_VALUE, 25);
+        menu.setMaximumSize(size);
         GroupLayout lMenu = new GroupLayout(menu);
         menu.setLayout(lMenu);
         lMenu.setHorizontalGroup(
@@ -113,7 +118,7 @@ public class CPanel extends JPanel {
                 .add(menu));
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                .add(menu, 25, 25, 25));
+                .add(menu));
         setLayout(layout);
     }
 
@@ -142,8 +147,8 @@ public class CPanel extends JPanel {
                     .add(content));
             layout.setVerticalGroup(
                     layout.createSequentialGroup()
-                    .add(menu, 25, 25, 25)
-                    .add(content, 75, 75, 75));
+                    .add(menu)
+                    .add(content));
             setLayout(layout);
         } else {
             GroupLayout layout = new GroupLayout(this);
@@ -152,7 +157,7 @@ public class CPanel extends JPanel {
                     .add(menu));
             layout.setVerticalGroup(
                     layout.createSequentialGroup()
-                    .add(menu, 25, 25, 25));
+                    .add(menu));
             setLayout(layout);
         }
     }

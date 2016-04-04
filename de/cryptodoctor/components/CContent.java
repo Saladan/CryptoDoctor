@@ -1,5 +1,6 @@
 package de.cryptodoctor.components;
 
+import java.awt.Dimension;
 import javax.swing.JPanel;
 
 /**
@@ -30,4 +31,12 @@ public abstract class CContent extends JPanel {
      * @return true if field is valid, false otherwise
      */
     public abstract boolean cryptIsValid();
+
+    public void initSize(int i) {
+        Dimension size = new Dimension(0, i);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        size = new Dimension(250, i);
+        setMaximumSize(size);
+    }
 }
