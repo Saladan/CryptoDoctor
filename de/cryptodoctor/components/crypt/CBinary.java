@@ -1,10 +1,10 @@
 package de.cryptodoctor.components.crypt;
 
 import de.cryptodoctor.components.CContent;
-import java.awt.Dimension;
 import static java.lang.Math.min;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
@@ -23,6 +23,7 @@ public class CBinary extends CContent {
     private static final Logger LOG = getLogger(CBinary.class.getName());
     JTextField editC;
     JLabel labelC;
+    JCheckBox checkC;
 
     /**
      *
@@ -30,10 +31,14 @@ public class CBinary extends CContent {
     public CBinary() {
         editC = new JTextField();
         labelC = new JLabel();
+        checkC = new JCheckBox();
 
         editC.setDocument(new BinaryDocument());
 
         labelC.setText("Binärer Schlüssel:");
+
+        checkC.setText("16 Bit Zeichen nutzen");
+        checkC.setSelected(true);
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -41,15 +46,18 @@ public class CBinary extends CContent {
                 .add(6, 6, 6)
                 .add(layout.createParallelGroup(LEADING)
                         .add(labelC)
-                        .add(editC))
+                        .add(editC)
+                        .add(checkC))
                 .add(6, 6, 6));
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .add(12, 12, 12)
                 .add(labelC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
                 .add(3, 3, 3)
                 .add(editC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
+                .add(6, 6, 6)
+                .add(checkC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
                 .add(6, 6, 6));
-        super.initSize(21 + labelC.getPreferredSize().height + editC.getPreferredSize().height);
+        super.initSize(27 + labelC.getPreferredSize().height + editC.getPreferredSize().height + checkC.getPreferredSize().height);
     }
 
     /**
@@ -60,7 +68,7 @@ public class CBinary extends CContent {
      */
     @Override
     public String encrypt(String text) {
-        return crypt(text.toCharArray(), getLong(editC.getText().toCharArray()), editC.getText().length());
+        return crypt(text.toCharArray(), editC.getText());
     }
 
     /**
@@ -71,25 +79,24 @@ public class CBinary extends CContent {
      */
     @Override
     public String decrypt(String text) {
-        return crypt(text.toCharArray(), getLong(editC.getText().toCharArray()), editC.getText().length());
+        return crypt(text.toCharArray(), editC.getText());
     }
 
-    String crypt(char[] raw, long c, int length) {
-        int pos = 0;
+    String crypt(char[] raw, String key) {
+        int length = checkC.isSelected() ? 16 : 8;
         for (int i = 0; i < raw.length; i++) {
-            for (int j = 0; j < 8; j++) {
-                raw[i] ^= ((c & (1 << pos)) >> pos) << j;
-                pos++;
-                if (pos == length) {
-                    pos = 0;
-                }
+            int pos = (length * i) % key.length();
+            String k = key;
+            while (pos + length > k.length()) {
+                k += k;
             }
+            raw[i] ^= getChar(k.substring(pos, pos + length).toCharArray());
         }
         return new String(raw);
     }
 
-    long getLong(char[] raw) {
-        byte c = 0;
+    char getChar(char[] raw) {
+        char c = 0;
         for (int i = 0; i < raw.length; i++) {
             c += raw[raw.length - 1 - i] == '1' ? 1 << i : 0;
         }
@@ -113,7 +120,7 @@ public class CBinary extends CContent {
 
         @Override
         public void insertString(int offset, String s, AttributeSet attributeSet) throws BadLocationException {
-            s = s.substring(0, min(63 - editC.getText().length(), s.length()));
+            s = s.substring(0, min(64 - editC.getText().length(), s.length()));
             if (s.length() == 0) {
                 return;
             }

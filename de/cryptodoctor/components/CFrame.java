@@ -86,11 +86,6 @@ public class CFrame extends JFrame {
         });
         //list
         sList.setViewportView(list);
-        /*Dimension size = new Dimension(0, 0);
-        list.setMinimumSize(size);
-        list.setPreferredSize(size);
-        size = new Dimension(250, MAX_VALUE);
-        list.setMaximumSize(size);*/
         list.setBackground(getBackground());
         layout = new GroupLayout(list);
         layout.setHorizontalGroup(layout.createParallelGroup().add(0, 0, 0));
