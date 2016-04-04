@@ -27,15 +27,15 @@ public class Info {
     /**
      * The Error Message in case of an Exception
      */
-    public static final String ERROR = "\nBitte melden Sie die Fehlermeldung an die Leitung des Projektes, damit der Fehler behoben werden kann.\n\nFehlermeldung:";
+    public static final String ERROR_MESSAGE = "\nBitte melden Sie die Fehlermeldung an die Leitung des Projektes, damit der Fehler behoben werden kann.\n\nFehlermeldung:";
     /**
      * The width of the GUI
      */
-    public static final int WIDTH = 720;
+    public static final int FRAME_WIDTH = 720;
     /**
      * The height of the GUI
      */
-    public static final int HEIGHT = 360;
+    public static final int FRAME_HEIGHT = 360;
     /**
      * Indicates weather the program is running. Set to false to stop execution.
      */

@@ -1,6 +1,7 @@
 package de.cryptodoctor.components;
 
-import de.cryptodoctor.Info;
+import static de.cryptodoctor.Info.FRAME_HEIGHT;
+import static de.cryptodoctor.Info.FRAME_WIDTH;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,12 +10,10 @@ import static java.lang.Short.MAX_VALUE;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import static java.util.logging.Logger.getLogger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -26,6 +25,8 @@ import static org.jdesktop.layout.GroupLayout.LEADING;
 import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 import org.jdesktop.layout.GroupLayout.ParallelGroup;
 import org.jdesktop.layout.GroupLayout.SequentialGroup;
+import static java.util.logging.Logger.getLogger;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
@@ -66,8 +67,8 @@ public class CFrame extends JFrame {
         //frame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("CryptoDoctor - Die einfache Ver- und Entschlüsselung");
-        setPreferredSize(new Dimension(Info.WIDTH, Info.HEIGHT));
-        setMinimumSize(new Dimension(Info.WIDTH, Info.HEIGHT));
+        setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         setMaximumSize(new Dimension(MAX_VALUE, MAX_VALUE));
         setLocationRelativeTo(null);
         //buttons

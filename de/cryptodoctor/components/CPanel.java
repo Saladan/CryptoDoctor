@@ -3,6 +3,8 @@ package de.cryptodoctor.components;
 import de.cryptodoctor.Info;
 import static de.cryptodoctor.Info.CIPHER_CLASSES;
 import static de.cryptodoctor.Info.CIPHER_NAMES;
+import static de.cryptodoctor.Info.ERROR_MESSAGE;
+import static de.cryptodoctor.Info.frame;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Dimension;
@@ -13,7 +15,6 @@ import java.awt.event.ItemListener;
 import static java.lang.Short.MAX_VALUE;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
-import static java.util.logging.Logger.getLogger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,6 +23,7 @@ import javax.swing.JToolBar;
 import javax.swing.border.LineBorder;
 import org.jdesktop.layout.GroupLayout;
 import static org.jdesktop.layout.GroupLayout.CENTER;
+import static java.util.logging.Logger.getLogger;
 
 /**
  *
@@ -57,7 +59,7 @@ public class CPanel extends JPanel {
                         hide.setEnabled(exists);
                         update(exists);
                     } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {
-                        LOG.log(SEVERE, Info.ERROR, ex);
+                        LOG.log(SEVERE, ERROR_MESSAGE, ex);
                     }
                 }
             }
@@ -65,6 +67,13 @@ public class CPanel extends JPanel {
         JButton moveUp = new JButton();
         JButton moveDown = new JButton();
         JButton close = new JButton();
+        final CPanel myself = this;
+        close.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.removeCrypt(myself);
+            }
+        });
         hide = new JButton();
         hide.setEnabled(false);
         hide.addActionListener(new ActionListener() {
