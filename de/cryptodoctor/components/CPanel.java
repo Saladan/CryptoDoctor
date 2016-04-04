@@ -30,11 +30,12 @@ import static org.jdesktop.layout.GroupLayout.CENTER;
 public class CPanel extends JPanel {
 
     private static final Logger LOG = getLogger(CPanel.class.getName());
-    JPanel menu;
-    CContent content;
-    JButton close;
-    ImageIcon iClose, iOpen;
-    boolean opened;
+    private static final long serialVersionUID = 1L;
+    private final JPanel menu;
+    private CContent content;
+    private JButton close;
+    private final ImageIcon iClose, iOpen;
+    private boolean opened;
 
     /**
      *
@@ -154,5 +155,21 @@ public class CPanel extends JPanel {
                     .add(menu, 25, 25, 25));
             setLayout(layout);
         }
+    }
+    
+    public boolean cryptIsValid() {
+        return content == null ? false : content.cryptIsValid();
+    }
+    
+    public boolean cryptExists() {
+        return content != null;
+    }
+    
+    public String encrypt(String text) {
+        return content.encrypt(text);
+    }
+    
+    public String decrypt(String text) {
+        return content.decrypt(text);
     }
 }

@@ -2,7 +2,9 @@ package de.cryptodoctor.components.crypt;
 
 import de.cryptodoctor.components.CContent;
 import static java.lang.Math.min;
+import static java.lang.Math.pow;
 import static java.lang.Short.MAX_VALUE;
+import static java.lang.System.out;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
@@ -82,9 +84,8 @@ public class CBinary extends CContent {
     byte getByte(char[] raw) {
         byte c = 0;
         for (int i = 0; i < 8; i++) {
-            c += raw[7 - i] == '1' ? Math.pow(2, i) : 0;
+            c += raw[7 - i] == '1' ? pow(2, i) : 0;
         }
-        System.out.println(c);
         return c;
     }
 

@@ -216,11 +216,11 @@ public class CFrame extends JFrame {
      */
     public void execute() {
         for (CPanel c : encrypts) {
-            if (c.content == null) {
+            if (!c.cryptExists()) {
                 showMessageDialog(this, "Es sind noch nicht alle Verschlüsselungen definiert!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
                 return;
             }
-            if (!c.content.cryptIsValid()) {
+            if (!c.cryptIsValid()) {
                 showMessageDialog(this, "Es gibt einen Fehler in der Verschlüsselungsdefinition!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
                 return;
             }
@@ -228,12 +228,12 @@ public class CFrame extends JFrame {
         if (tEnc.isSelected()) {
             decText.setText(encText.getText());
             for (CPanel c : encrypts) {
-                decText.setText(c.content.encrypt(decText.getText()));
+                decText.setText(c.encrypt(decText.getText()));
             }
         } else {
             encText.setText(decText.getText());
             for (CPanel c : decrypts) {
-                encText.setText(c.content.decrypt(encText.getText()));
+                encText.setText(c.decrypt(encText.getText()));
             }
         }
     }
