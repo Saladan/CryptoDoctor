@@ -3,6 +3,8 @@ package de.cryptodoctor.components;
 import de.cryptodoctor.Info;
 import static de.cryptodoctor.Info.CIPHER_CLASSES;
 import static de.cryptodoctor.Info.CIPHER_NAMES;
+import static de.cryptodoctor.Info.ERROR_MESSAGE;
+import static de.cryptodoctor.Info.frame;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Dimension;
@@ -13,7 +15,6 @@ import java.awt.event.ItemListener;
 import static java.lang.Short.MAX_VALUE;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
-import static java.util.logging.Logger.getLogger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,6 +23,7 @@ import javax.swing.JToolBar;
 import javax.swing.border.LineBorder;
 import org.jdesktop.layout.GroupLayout;
 import static org.jdesktop.layout.GroupLayout.CENTER;
+import static java.util.logging.Logger.getLogger;
 
 /**
  *
@@ -30,11 +32,12 @@ import static org.jdesktop.layout.GroupLayout.CENTER;
 public class CPanel extends JPanel {
 
     private static final Logger LOG = getLogger(CPanel.class.getName());
-    JPanel menu;
-    CContent content;
-    JButton close;
-    ImageIcon iClose, iOpen;
-    boolean opened;
+    private static final long serialVersionUID = 1L;
+    private final JPanel menu;
+    private CContent content;
+    private JButton hide;
+    private final ImageIcon iClose, iOpen;
+    private boolean opened;
 
     /**
      *
@@ -53,19 +56,27 @@ public class CPanel extends JPanel {
                         int index = combo.getSelectedIndex();
                         boolean exists = index > 0;
                         content = exists ? (CContent) CIPHER_CLASSES[index].newInstance() : null;
-                        close.setEnabled(exists);
+                        hide.setEnabled(exists);
                         update(exists);
                     } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {
-                        LOG.log(SEVERE, Info.ERROR, ex);
+                        LOG.log(SEVERE, ERROR_MESSAGE, ex);
                     }
                 }
             }
         });
         JButton moveUp = new JButton();
         JButton moveDown = new JButton();
-        close = new JButton();
-        close.setEnabled(false);
+        JButton close = new JButton();
+        final CPanel myself = this;
         close.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.removeCrypt(myself);
+            }
+        });
+        hide = new JButton();
+        hide.setEnabled(false);
+        hide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setOpened(!opened);
@@ -80,9 +91,13 @@ public class CPanel extends JPanel {
         moveDown.setMinimumSize(size);
         moveDown.setPreferredSize(size);
         moveDown.setMaximumSize(size);
+        close.setIcon(createIcon("icons:close"));
         close.setMinimumSize(size);
         close.setPreferredSize(size);
         close.setMaximumSize(size);
+        hide.setMinimumSize(size);
+        hide.setPreferredSize(size);
+        hide.setMaximumSize(size);
         iClose = createIcon("icons:left");
         iOpen = createIcon("icons:right");
         JToolBar control = new JToolBar();
@@ -90,6 +105,7 @@ public class CPanel extends JPanel {
         control.setBorder(null);
         control.add(moveUp);
         control.add(moveDown);
+        control.add(hide);
         control.add(close);
         menu = new JPanel();
         size = new Dimension(0, 25);
@@ -103,14 +119,14 @@ public class CPanel extends JPanel {
                 lMenu.createSequentialGroup()
                 .add(combo, 0, 0, MAX_VALUE)
                 .add(2, 2, 2)
-                .add(control, 60, 60, 60));
+                .add(control, 80, 80, 80));
         lMenu.setVerticalGroup(
                 lMenu.createParallelGroup(CENTER)
                 .add(combo)
                 .add(control, 20, 20, 20));
         content = null;
         opened = false;
-        close.setIcon(iOpen);
+        hide.setIcon(iOpen);
         GroupLayout layout = new GroupLayout(this);
         layout.setHorizontalGroup(
                 layout.createParallelGroup()
@@ -128,7 +144,7 @@ public class CPanel extends JPanel {
     public void setOpened(boolean opened) {
         this.opened = opened;
         content.setVisible(opened);
-        close.setIcon(opened ? iClose : iOpen);
+        hide.setIcon(opened ? iClose : iOpen);
     }
 
     /**
@@ -137,7 +153,7 @@ public class CPanel extends JPanel {
      */
     public void update(boolean enabled) {
         opened = enabled;
-        close.setIcon(enabled ? iClose : iOpen);
+        hide.setIcon(enabled ? iClose : iOpen);
         if (enabled) {
             GroupLayout layout = new GroupLayout(this);
             layout.setHorizontalGroup(
@@ -159,5 +175,43 @@ public class CPanel extends JPanel {
                     .add(menu));
             setLayout(layout);
         }
+    }
+    
+    /**
+     * Indicates weather the Encryption Field is valid or invalid
+     *
+     * @return true if field is valid, false otherwise
+     */
+    public boolean cryptIsValid() {
+        return content == null ? false : content.cryptIsValid();
+    }
+    
+    /**
+     * Indicates weather the Encryption Field exists or does not exist.
+     *
+     * @return true if field exists, false otherwise
+     */
+    public boolean cryptExists() {
+        return content != null;
+    }
+    
+    /**
+     * Encrypts the given text width specific Encryption rules.
+     *
+     * @param text The text to be encrypted
+     * @return The encrypted text
+     */
+    public String encrypt(String text) {
+        return content.encrypt(text);
+    }
+    
+    /**
+     * Decrypts the given text with specific Decryption rules.
+     *
+     * @param text The text to be decrypted
+     * @return The decrypted text
+     */
+    public String decrypt(String text) {
+        return content.decrypt(text);
     }
 }

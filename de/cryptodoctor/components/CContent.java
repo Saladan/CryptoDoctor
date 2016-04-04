@@ -9,6 +9,8 @@ import javax.swing.JPanel;
  */
 public abstract class CContent extends JPanel {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Encrypts the given text width specific Encryption rules.
      *
@@ -32,6 +34,10 @@ public abstract class CContent extends JPanel {
      */
     public abstract boolean cryptIsValid();
 
+    /**
+     *
+     * @param i
+     */
     public void initSize(int i) {
         Dimension size = new Dimension(0, i);
         setMinimumSize(size);

@@ -1,6 +1,7 @@
 package de.cryptodoctor.components;
 
-import de.cryptodoctor.Info;
+import static de.cryptodoctor.Info.FRAME_HEIGHT;
+import static de.cryptodoctor.Info.FRAME_WIDTH;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,12 +10,10 @@ import static java.lang.Short.MAX_VALUE;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import static java.util.logging.Logger.getLogger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -26,6 +25,8 @@ import static org.jdesktop.layout.GroupLayout.LEADING;
 import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 import org.jdesktop.layout.GroupLayout.ParallelGroup;
 import org.jdesktop.layout.GroupLayout.SequentialGroup;
+import static java.util.logging.Logger.getLogger;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
@@ -34,14 +35,15 @@ import org.jdesktop.layout.GroupLayout.SequentialGroup;
 public class CFrame extends JFrame {
 
     private static final Logger LOG = getLogger(CFrame.class.getName());
-    JButton bNew, bEnter;
-    JToggleButton tEnc, tDec;
-    JPanel tabs, crypt, list;
-    JTextArea encText, decText;
-    JSplitPane split;
-    JScrollPane sEnc, sDec, sList;
-    List<CPanel> encrypts, decrypts;
-    GroupLayout layout;
+    private static final long serialVersionUID = 1L;
+    private final JButton bNew, bEnter;
+    private final JToggleButton tEnc, tDec;
+    private final JPanel tabs, crypt, list;
+    private final JTextArea encText, decText;
+    private final JSplitPane split;
+    private final JScrollPane sEnc, sDec, sList;
+    private final List<CPanel> encrypts, decrypts;
+    private final GroupLayout layout;
 
     /**
      *
@@ -65,8 +67,8 @@ public class CFrame extends JFrame {
         //frame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("CryptoDoctor - Die einfache Ver- und Entschlüsselung");
-        setPreferredSize(new Dimension(Info.WIDTH, Info.HEIGHT));
-        setMinimumSize(new Dimension(Info.WIDTH, Info.HEIGHT));
+        setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         setMaximumSize(new Dimension(MAX_VALUE, MAX_VALUE));
         setLocationRelativeTo(null);
         //buttons
@@ -86,11 +88,6 @@ public class CFrame extends JFrame {
         });
         //list
         sList.setViewportView(list);
-        /*Dimension size = new Dimension(0, 0);
-        list.setMinimumSize(size);
-        list.setPreferredSize(size);
-        size = new Dimension(250, MAX_VALUE);
-        list.setMaximumSize(size);*/
         list.setBackground(getBackground());
         layout = new GroupLayout(list);
         layout.setHorizontalGroup(layout.createParallelGroup().add(0, 0, 0));
@@ -220,11 +217,11 @@ public class CFrame extends JFrame {
      */
     public void execute() {
         for (CPanel c : encrypts) {
-            if (c.content == null) {
+            if (!c.cryptExists()) {
                 showMessageDialog(this, "Es sind noch nicht alle Verschlüsselungen definiert!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
                 return;
             }
-            if (!c.content.cryptIsValid()) {
+            if (!c.cryptIsValid()) {
                 showMessageDialog(this, "Es gibt einen Fehler in der Verschlüsselungsdefinition!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
                 return;
             }
@@ -232,12 +229,12 @@ public class CFrame extends JFrame {
         if (tEnc.isSelected()) {
             decText.setText(encText.getText());
             for (CPanel c : encrypts) {
-                decText.setText(c.content.encrypt(decText.getText()));
+                decText.setText(c.encrypt(decText.getText()));
             }
         } else {
             encText.setText(decText.getText());
             for (CPanel c : decrypts) {
-                encText.setText(c.content.decrypt(encText.getText()));
+                encText.setText(c.decrypt(encText.getText()));
             }
         }
     }
