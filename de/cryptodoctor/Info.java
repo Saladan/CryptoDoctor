@@ -23,7 +23,7 @@ public class Info {
     /**
      * Names of all Ciphers that have been implemented
      */
-    public static final String[] CIPHER_NAMES = new String[]{"<bitte wählen>", "Cäsar-Verschlüsselung", "Vigenère-Verschlüsselung", "Binäre Verchlüsselung (XOR)"};
+    public static final String[] CIPHER_NAMES = new String[]{"<bitte wählen>", "Cäsar-Verschlüsselung", "Vigenère-Verschlüsselung", "Binäre Verschlüsselung (XOR)"};
     /**
      * The Error Message in case of an Exception
      */

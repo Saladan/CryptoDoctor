@@ -33,7 +33,7 @@ public class CPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private final JPanel menu;
     private CContent content;
-    private JButton close;
+    private JButton hide;
     private final ImageIcon iClose, iOpen;
     private boolean opened;
 
@@ -54,7 +54,7 @@ public class CPanel extends JPanel {
                         int index = combo.getSelectedIndex();
                         boolean exists = index > 0;
                         content = exists ? (CContent) CIPHER_CLASSES[index].newInstance() : null;
-                        close.setEnabled(exists);
+                        hide.setEnabled(exists);
                         update(exists);
                     } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {
                         LOG.log(SEVERE, Info.ERROR, ex);
@@ -64,9 +64,10 @@ public class CPanel extends JPanel {
         });
         JButton moveUp = new JButton();
         JButton moveDown = new JButton();
-        close = new JButton();
-        close.setEnabled(false);
-        close.addActionListener(new ActionListener() {
+        JButton close = new JButton();
+        hide = new JButton();
+        hide.setEnabled(false);
+        hide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setOpened(!opened);
@@ -81,9 +82,13 @@ public class CPanel extends JPanel {
         moveDown.setMinimumSize(size);
         moveDown.setPreferredSize(size);
         moveDown.setMaximumSize(size);
+        close.setIcon(createIcon("icons:close"));
         close.setMinimumSize(size);
         close.setPreferredSize(size);
         close.setMaximumSize(size);
+        hide.setMinimumSize(size);
+        hide.setPreferredSize(size);
+        hide.setMaximumSize(size);
         iClose = createIcon("icons:left");
         iOpen = createIcon("icons:right");
         JToolBar control = new JToolBar();
@@ -91,6 +96,7 @@ public class CPanel extends JPanel {
         control.setBorder(null);
         control.add(moveUp);
         control.add(moveDown);
+        control.add(hide);
         control.add(close);
         menu = new JPanel();
         size = new Dimension(0, 25);
@@ -104,14 +110,14 @@ public class CPanel extends JPanel {
                 lMenu.createSequentialGroup()
                 .add(combo, 0, 0, MAX_VALUE)
                 .add(2, 2, 2)
-                .add(control, 60, 60, 60));
+                .add(control, 80, 80, 80));
         lMenu.setVerticalGroup(
                 lMenu.createParallelGroup(CENTER)
                 .add(combo)
                 .add(control, 20, 20, 20));
         content = null;
         opened = false;
-        close.setIcon(iOpen);
+        hide.setIcon(iOpen);
         GroupLayout layout = new GroupLayout(this);
         layout.setHorizontalGroup(
                 layout.createParallelGroup()
@@ -129,7 +135,7 @@ public class CPanel extends JPanel {
     public void setOpened(boolean opened) {
         this.opened = opened;
         content.setVisible(opened);
-        close.setIcon(opened ? iClose : iOpen);
+        hide.setIcon(opened ? iClose : iOpen);
     }
 
     /**
@@ -138,7 +144,7 @@ public class CPanel extends JPanel {
      */
     public void update(boolean enabled) {
         opened = enabled;
-        close.setIcon(enabled ? iClose : iOpen);
+        hide.setIcon(enabled ? iClose : iOpen);
         if (enabled) {
             GroupLayout layout = new GroupLayout(this);
             layout.setHorizontalGroup(
@@ -162,18 +168,40 @@ public class CPanel extends JPanel {
         }
     }
     
+    /**
+     * Indicates weather the Encryption Field is valid or invalid
+     *
+     * @return true if field is valid, false otherwise
+     */
     public boolean cryptIsValid() {
         return content == null ? false : content.cryptIsValid();
     }
     
+    /**
+     * Indicates weather the Encryption Field exists or does not exist.
+     *
+     * @return true if field exists, false otherwise
+     */
     public boolean cryptExists() {
         return content != null;
     }
     
+    /**
+     * Encrypts the given text width specific Encryption rules.
+     *
+     * @param text The text to be encrypted
+     * @return The encrypted text
+     */
     public String encrypt(String text) {
         return content.encrypt(text);
     }
     
+    /**
+     * Decrypts the given text with specific Decryption rules.
+     *
+     * @param text The text to be decrypted
+     * @return The decrypted text
+     */
     public String decrypt(String text) {
         return content.decrypt(text);
     }

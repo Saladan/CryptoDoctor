@@ -34,14 +34,15 @@ import org.jdesktop.layout.GroupLayout.SequentialGroup;
 public class CFrame extends JFrame {
 
     private static final Logger LOG = getLogger(CFrame.class.getName());
-    JButton bNew, bEnter;
-    JToggleButton tEnc, tDec;
-    JPanel tabs, crypt, list;
-    JTextArea encText, decText;
-    JSplitPane split;
-    JScrollPane sEnc, sDec, sList;
-    List<CPanel> encrypts, decrypts;
-    GroupLayout layout;
+    private static final long serialVersionUID = 1L;
+    private final JButton bNew, bEnter;
+    private final JToggleButton tEnc, tDec;
+    private final JPanel tabs, crypt, list;
+    private final JTextArea encText, decText;
+    private final JSplitPane split;
+    private final JScrollPane sEnc, sDec, sList;
+    private final List<CPanel> encrypts, decrypts;
+    private final GroupLayout layout;
 
     /**
      *

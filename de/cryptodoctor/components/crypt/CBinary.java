@@ -22,9 +22,9 @@ public class CBinary extends CContent {
 
     private static final Logger LOG = getLogger(CBinary.class.getName());
     private static final long serialVersionUID = 1L;
-    private JTextField editC;
-    private JLabel labelC;
-    private JCheckBox checkC;
+    private final JTextField editC;
+    private final JLabel labelC;
+    private final JCheckBox checkC;
 
     /**
      *
@@ -42,7 +42,7 @@ public class CBinary extends CContent {
         checkC.setSelected(true);
 
         GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
+        setLayout(layout);
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .add(6, 6, 6)
                 .add(layout.createParallelGroup(LEADING)
@@ -116,21 +116,23 @@ public class CBinary extends CContent {
 
     private class BinaryDocument extends PlainDocument {
 
+        private static final long serialVersionUID = 1L;
+
         BinaryDocument() {
         }
 
         @Override
         public void insertString(int offset, String s, AttributeSet attributeSet) throws BadLocationException {
-            s = s.substring(0, min(64 - editC.getText().length(), s.length()));
-            if (s.length() == 0) {
+            String x = s.substring(0, min(64 - editC.getText().length(), s.length()));
+            if (x.length() == 0) {
                 return;
             }
-            for (char c : s.toCharArray()) {
+            for (char c : x.toCharArray()) {
                 if (c < '0' || c > '1') {
                     return;
                 }
             }
-            super.insertString(offset, s, attributeSet);
+            super.insertString(offset, x, attributeSet);
         }
     }
 
