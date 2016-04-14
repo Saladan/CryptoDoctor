@@ -1,10 +1,9 @@
 package de.cryptodoctor.components;
 
-import de.cryptodoctor.Info;
 import static de.cryptodoctor.Info.CIPHER_CLASSES;
 import static de.cryptodoctor.Info.CIPHER_NAMES;
 import static de.cryptodoctor.Info.ERROR_MESSAGE;
-import static de.cryptodoctor.Info.frame;
+import static de.cryptodoctor.Info.getFrame;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Dimension;
@@ -71,7 +70,7 @@ public class CPanel extends JPanel {
         close.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.removeCrypt(myself);
+                getFrame().removeCrypt(myself);
             }
         });
         hide = new JButton();

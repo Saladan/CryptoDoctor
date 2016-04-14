@@ -1,11 +1,11 @@
 package de.cryptodoctor;
 
-import static de.cryptodoctor.Info.frame;
-import static de.cryptodoctor.Info.running;
+import static de.cryptodoctor.Info.ERROR_MESSAGE;
+import static de.cryptodoctor.Info.getFrame;
+import static de.cryptodoctor.Info.isRunning;
 import static java.lang.System.exit;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
-import static de.cryptodoctor.Info.ERROR_MESSAGE;
 import static java.util.logging.Logger.getLogger;
 
 /**
@@ -22,8 +22,8 @@ public class Run implements Runnable {
     @Override
     public void run() {
         try {
-            frame.setVisible(true);
-            while (running) {
+            getFrame().setVisible(true);
+            while (isRunning()) {
             }
         } catch (Exception e) {
             LOG.log(SEVERE, ERROR_MESSAGE, e);

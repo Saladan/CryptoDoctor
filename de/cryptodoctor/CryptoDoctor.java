@@ -1,6 +1,6 @@
 package de.cryptodoctor;
 
-import static de.cryptodoctor.Info.frame;
+import static de.cryptodoctor.Info.setFrame;
 import de.cryptodoctor.components.CFrame;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
@@ -8,7 +8,7 @@ import static java.util.logging.Logger.getLogger;
 /**
  *
  * @author Saladan
- * @version v4.0.0-pre-alpha
+ * @version v4.0.2-pre-alpha
  */
 public class CryptoDoctor {
 
@@ -18,7 +18,7 @@ public class CryptoDoctor {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        frame = new CFrame();
+        setFrame(new CFrame());
         new Thread(new Run()).start();
     }
 }

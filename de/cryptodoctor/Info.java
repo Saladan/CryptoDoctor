@@ -36,14 +36,39 @@ public class Info {
      * The height of the GUI
      */
     public static final int FRAME_HEIGHT = 360;
+    
+    private static boolean running = true;
+    private static CFrame frame;
+
     /**
-     * Indicates weather the program is running. Set to false to stop execution.
+     * Indicates weather the program is running.
+     * 
+     * @return true if the Application is running, false otherwise
      */
-    public static boolean running = true;
+    public static boolean isRunning() {
+        return running;
+    }
+
     /**
-     * GUI Frame
+     * @param r the Run-Status to be set
      */
-    public static CFrame frame;
+    public static void setRunning(boolean r) {
+        running = r;
+    }
+
+    /**
+     * @return the main frame
+     */
+    public static CFrame getFrame() {
+        return frame;
+    }
+
+    /**
+     * @param f the frame to set
+     */
+    public static void setFrame(CFrame f) {
+        frame = f;
+    }
 
     private Info() {
     }
