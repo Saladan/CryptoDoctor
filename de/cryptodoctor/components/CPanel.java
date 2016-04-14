@@ -1,9 +1,9 @@
 package de.cryptodoctor.components;
 
-import static de.cryptodoctor.Info.CIPHER_CLASSES;
-import static de.cryptodoctor.Info.CIPHER_NAMES;
-import static de.cryptodoctor.Info.ERROR_MESSAGE;
-import static de.cryptodoctor.Info.getFrame;
+import de.cryptodoctor.Application;
+import static de.cryptodoctor.Application.CIPHER_CLASSES;
+import static de.cryptodoctor.Application.CIPHER_NAMES;
+import static de.cryptodoctor.Application.ERROR_MESSAGE;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Dimension;
@@ -32,6 +32,7 @@ public class CPanel extends JPanel {
 
     private static final Logger LOG = getLogger(CPanel.class.getName());
     private static final long serialVersionUID = 1L;
+    private final Application application;
     private final JPanel menu;
     private CContent content;
     private JButton hide;
@@ -40,8 +41,10 @@ public class CPanel extends JPanel {
 
     /**
      *
+     * @param a
      */
-    public CPanel() {
+    public CPanel(Application a) {
+        application = a;
         setBorder(new LineBorder(black));
         final JComboBox<String> combo = new JComboBox<>(CIPHER_NAMES);
         combo.addItemListener(new ItemListener() {
@@ -58,6 +61,7 @@ public class CPanel extends JPanel {
                         hide.setEnabled(exists);
                         update(exists);
                     } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {
+                        
                         LOG.log(SEVERE, ERROR_MESSAGE, ex);
                     }
                 }
@@ -70,7 +74,7 @@ public class CPanel extends JPanel {
         close.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getFrame().removeCrypt(myself);
+                application.getFrame().removeCrypt(myself);
             }
         });
         hide = new JButton();

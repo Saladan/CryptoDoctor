@@ -18,6 +18,7 @@ import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 public class CCaesar extends CContent {
 
     private static final Logger LOG = getLogger(CCaesar.class.getName());
+    private static final long serialVersionUID = 1L;
     JSlider sliderC;
     JLabel labelC;
 

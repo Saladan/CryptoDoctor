@@ -1,7 +1,8 @@
 package de.cryptodoctor.components;
 
-import static de.cryptodoctor.Info.FRAME_HEIGHT;
-import static de.cryptodoctor.Info.FRAME_WIDTH;
+import de.cryptodoctor.Application;
+import static de.cryptodoctor.Application.FRAME_HEIGHT;
+import static de.cryptodoctor.Application.FRAME_WIDTH;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -10,12 +11,10 @@ import static java.lang.Short.MAX_VALUE;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import static java.util.logging.Logger.getLogger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -27,6 +26,8 @@ import static org.jdesktop.layout.GroupLayout.LEADING;
 import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 import org.jdesktop.layout.GroupLayout.ParallelGroup;
 import org.jdesktop.layout.GroupLayout.SequentialGroup;
+import static java.util.logging.Logger.getLogger;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
@@ -36,6 +37,7 @@ public class CFrame extends JFrame {
 
     private static final Logger LOG = getLogger(CFrame.class.getName());
     private static final long serialVersionUID = 1L;
+    private final Application application;
     private final JButton bNew, bEnter;
     private final JToggleButton tEnc, tDec;
     private final JPanel tabs, crypt, list;
@@ -47,8 +49,10 @@ public class CFrame extends JFrame {
 
     /**
      *
+     * @param a
      */
-    public CFrame() {
+    public CFrame(Application a) {
+        application = a;
         bNew = new JButton();
         bEnter = new JButton();
         tEnc = new JToggleButton();
@@ -76,7 +80,7 @@ public class CFrame extends JFrame {
         bNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addCrypt(new CPanel());
+                addCrypt(new CPanel(application));
             }
         });
         bEnter.setIcon(createIcon("icons:enter"));

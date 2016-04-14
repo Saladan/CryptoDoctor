@@ -21,6 +21,7 @@ import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 public class CVigenere extends CContent {
 
     private static final Logger LOG = getLogger(CVigenere.class.getName());
+    private static final long serialVersionUID = 1L;
     JTextField editC;
     JLabel labelC;
 
@@ -124,6 +125,8 @@ public class CVigenere extends CContent {
     }
 
     private class UpperCaseDocument extends PlainDocument {
+
+        private static final long serialVersionUID = 1L;
 
         UpperCaseDocument() {
         }
