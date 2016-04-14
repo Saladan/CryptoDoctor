@@ -3,7 +3,6 @@ package de.cryptodoctor.components;
 import de.cryptodoctor.Application;
 import static de.cryptodoctor.Application.CIPHER_CLASSES;
 import static de.cryptodoctor.Application.CIPHER_NAMES;
-import static de.cryptodoctor.Application.ERROR_MESSAGE;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Dimension;
@@ -22,6 +21,7 @@ import javax.swing.JToolBar;
 import javax.swing.border.LineBorder;
 import org.jdesktop.layout.GroupLayout;
 import static org.jdesktop.layout.GroupLayout.CENTER;
+import static de.cryptodoctor.Application.NORMAL_MESSAGE;
 import static java.util.logging.Logger.getLogger;
 
 /**
@@ -62,7 +62,7 @@ public class CPanel extends JPanel {
                         update(exists);
                     } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {
 
-                        LOG.log(SEVERE, ERROR_MESSAGE, ex);
+                        LOG.log(SEVERE, NORMAL_MESSAGE, ex);
                     }
                 }
             }

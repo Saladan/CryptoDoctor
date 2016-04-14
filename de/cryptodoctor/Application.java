@@ -27,11 +27,11 @@ public class Application {
     /**
      * The error message in case of an exception
      */
-    public static final String ERROR_MESSAGE = "\nAn unexpected error occured. Please send the error message to project contributors.\n\n";
+    public static final String NORMAL_MESSAGE = "An unexpected error occured. Please send the error message to project contributors.";
     /**
      * The error message in case of a fatal exception
      */
-    public static final String FATAL_MESSAGE = "\nA fatal error occured. The application is being stopped. Please send the error message to project contributors.\n\n";
+    public static final String FATAL_MESSAGE = "A fatal error occured. The application is being stopped. Please send the error message to project contributors.";
     /**
      * The width of the GUI
      */

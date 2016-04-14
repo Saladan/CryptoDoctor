@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -27,7 +26,6 @@ import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 import org.jdesktop.layout.GroupLayout.ParallelGroup;
 import org.jdesktop.layout.GroupLayout.SequentialGroup;
 import static java.util.logging.Logger.getLogger;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * @todo Javadoc
@@ -115,11 +113,11 @@ public class CFrame extends JFrame {
     public void execute() {
         for (CPanel c : encrypts) {
             if (!c.cryptExists()) {
-                showMessageDialog(this, "Es sind noch nicht alle Verschlüsselungen definiert!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
+                application.getMainRoutine().logException(new NullPointerException("ERROR_USER 0: No content defined"));
                 return;
             }
             if (!c.cryptIsValid()) {
-                showMessageDialog(this, "Es gibt einen Fehler in der Verschlüsselungsdefinition!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
+                application.getMainRoutine().logException(new IllegalArgumentException("ERROR_USER 1: Crypt not valid"));
                 return;
             }
         }
