@@ -8,18 +8,16 @@ import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 
 /**
- *
+ * @todo Javadoc
  * @author Saladan
  */
 public class Application {
-    
 
     private static final Logger LOG = getLogger(Application.class.getName());
 
     /**
      * Classes of all Ciphers that have been implemented
      */
-    //public static final List<Class<CContent>> CIPHER_CLASSES = new ArrayList({null, CCaesar.class, CVigenere.class, CBinary.class});
     public static final Class[] CIPHER_CLASSES = new Class[]{null, CCaesar.class, CVigenere.class, CBinary.class};
 
     /**
@@ -42,11 +40,11 @@ public class Application {
      * The height of the GUI
      */
     public static final int FRAME_HEIGHT = 360;
-    
+
     private boolean running = true;
     private final CFrame frame;
     private final MainRoutine mainroutine;
-    
+
     /**
      * Construct a new application frame. Initialize all neccessary items.
      */
@@ -57,7 +55,7 @@ public class Application {
 
     /**
      * Indicates weather the program is running.
-     * 
+     *
      * @return true if the Application is running, false otherwise
      */
     public boolean isRunning() {
@@ -65,6 +63,7 @@ public class Application {
     }
 
     /**
+     * @todo Javadoc
      * @param running the MainRoutine-Status to be set
      */
     public void setRunning(boolean running) {
@@ -72,14 +71,15 @@ public class Application {
     }
 
     /**
+     * @todo Javadoc
      * @return the main frame
      */
     public CFrame getFrame() {
         return frame;
     }
-    
+
     /**
-     *
+     * @todo Javadoc
      * @return the main routine of the application
      */
     public MainRoutine getMainRoutine() {

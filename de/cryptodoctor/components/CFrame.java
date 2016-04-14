@@ -30,7 +30,7 @@ import static java.util.logging.Logger.getLogger;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
- *
+ * @todo Javadoc
  * @author Saladan
  */
 public class CFrame extends JFrame {
@@ -48,8 +48,8 @@ public class CFrame extends JFrame {
     private final GroupLayout layout;
 
     /**
-     *
-     * @param a
+     * @todo Javadoc
+     * @param a the application definition
      */
     public CFrame(Application a) {
         application = a;
@@ -66,8 +66,77 @@ public class CFrame extends JFrame {
         sEnc = new JScrollPane();
         sDec = new JScrollPane();
         sList = new JScrollPane();
-        encrypts = new ArrayList<>();
-        decrypts = new ArrayList<>();
+        encrypts = new ArrayList<>(0);
+        decrypts = new ArrayList<>(0);
+        layout = new GroupLayout(list);
+        initObjects();
+    }
+
+    /**
+     *
+     * @param crypt The Encryption to be added
+     */
+    public void addCrypt(CPanel crypt) {
+        encrypts.add(crypt);
+        decrypts.add(0, crypt);
+        updateList();
+    }
+
+    /**
+     *
+     * @param crypt The Encryption to be removed
+     */
+    public void removeCrypt(CPanel crypt) {
+        encrypts.remove(crypt);
+        decrypts.remove(crypt);
+        updateList();
+    }
+
+    /**
+     * Update the Encryption List on the GUI-Frame
+     */
+    public void updateList() {
+        list.setLayout(null);
+        ParallelGroup horiz = layout.createParallelGroup().add(0, 0, 0);
+        SequentialGroup vertic = layout.createSequentialGroup().add(0, 0, 0);
+        List<CPanel> crypts = tEnc.isSelected() ? encrypts : decrypts;
+        for (CPanel c : crypts) {
+            horiz = horiz.add(c);
+            vertic = vertic.add(c).add(1, 1, 1);
+        }
+        layout.setHorizontalGroup(horiz);
+        layout.setVerticalGroup(vertic);
+        list.setLayout(layout);
+    }
+
+    /**
+     * Execute En- or Decryption
+     */
+    public void execute() {
+        for (CPanel c : encrypts) {
+            if (!c.cryptExists()) {
+                showMessageDialog(this, "Es sind noch nicht alle Verschlüsselungen definiert!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
+                return;
+            }
+            if (!c.cryptIsValid()) {
+                showMessageDialog(this, "Es gibt einen Fehler in der Verschlüsselungsdefinition!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
+                return;
+            }
+        }
+        if (tEnc.isSelected()) {
+            decText.setText(encText.getText());
+            for (CPanel c : encrypts) {
+                decText.setText(c.encrypt(decText.getText()));
+            }
+        } else {
+            encText.setText(decText.getText());
+            for (CPanel c : decrypts) {
+                encText.setText(c.decrypt(encText.getText()));
+            }
+        }
+    }
+
+    private void initObjects() {
         //frame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("CryptoDoctor - Die einfache Ver- und Entschlüsselung");
@@ -93,7 +162,6 @@ public class CFrame extends JFrame {
         //list
         sList.setViewportView(list);
         list.setBackground(getBackground());
-        layout = new GroupLayout(list);
         layout.setHorizontalGroup(layout.createParallelGroup().add(0, 0, 0));
         layout.setVerticalGroup(layout.createSequentialGroup().add(0, 0, 0));
         list.setLayout(layout);
@@ -177,69 +245,5 @@ public class CFrame extends JFrame {
                                         .add(bEnter, 20, 20, 20))))//25
                 .add(6, 6, 6));//6
         pack();
-    }
-
-    /**
-     *
-     * @param crypt The Encryption to be added
-     */
-    public void addCrypt(CPanel crypt) {
-        encrypts.add(crypt);
-        decrypts.add(0, crypt);
-        updateList();
-    }
-
-    /**
-     *
-     * @param crypt The Encryption to be removed
-     */
-    public void removeCrypt(CPanel crypt) {
-        encrypts.remove(crypt);
-        decrypts.remove(crypt);
-        updateList();
-    }
-
-    /**
-     * Update the Encryption List on the GUI-Frame
-     */
-    public void updateList() {
-        list.setLayout(null);
-        ParallelGroup horiz = layout.createParallelGroup().add(0, 0, 0);
-        SequentialGroup vertic = layout.createSequentialGroup().add(0, 0, 0);
-        List<CPanel> crypts = tEnc.isSelected() ? encrypts : decrypts;
-        for (CPanel c : crypts) {
-            horiz = horiz.add(c);
-            vertic = vertic.add(c).add(1, 1, 1);
-        }
-        layout.setHorizontalGroup(horiz);
-        layout.setVerticalGroup(vertic);
-        list.setLayout(layout);
-    }
-
-    /**
-     * Execute En- or Decryption
-     */
-    public void execute() {
-        for (CPanel c : encrypts) {
-            if (!c.cryptExists()) {
-                showMessageDialog(this, "Es sind noch nicht alle Verschlüsselungen definiert!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
-                return;
-            }
-            if (!c.cryptIsValid()) {
-                showMessageDialog(this, "Es gibt einen Fehler in der Verschlüsselungsdefinition!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
-                return;
-            }
-        }
-        if (tEnc.isSelected()) {
-            decText.setText(encText.getText());
-            for (CPanel c : encrypts) {
-                decText.setText(c.encrypt(decText.getText()));
-            }
-        } else {
-            encText.setText(decText.getText());
-            for (CPanel c : decrypts) {
-                encText.setText(c.decrypt(encText.getText()));
-            }
-        }
     }
 }

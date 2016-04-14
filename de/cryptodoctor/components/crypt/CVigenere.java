@@ -15,7 +15,7 @@ import static org.jdesktop.layout.GroupLayout.LEADING;
 import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
 /**
- *
+ * @todo Javadoc
  * @author Saladan
  */
 public class CVigenere extends CContent {
@@ -26,7 +26,7 @@ public class CVigenere extends CContent {
     JLabel labelC;
 
     /**
-     *
+     * @todo Javadoc
      */
     public CVigenere() {
         editC = new JTextField();

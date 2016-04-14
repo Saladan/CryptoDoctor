@@ -35,7 +35,7 @@ public abstract class CContent extends JPanel {
     public abstract boolean cryptIsValid();
 
     /**
-     *
+     * @todo Javadoc
      * @param i
      */
     public void initSize(int i) {

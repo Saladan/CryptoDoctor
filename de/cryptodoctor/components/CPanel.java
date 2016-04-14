@@ -25,7 +25,7 @@ import static org.jdesktop.layout.GroupLayout.CENTER;
 import static java.util.logging.Logger.getLogger;
 
 /**
- *
+ * @todo Javadoc
  * @author Saladan
  */
 public class CPanel extends JPanel {
@@ -40,7 +40,7 @@ public class CPanel extends JPanel {
     private boolean opened;
 
     /**
-     *
+     * @todo Javadoc
      * @param a
      */
     public CPanel(Application a) {
@@ -61,7 +61,7 @@ public class CPanel extends JPanel {
                         hide.setEnabled(exists);
                         update(exists);
                     } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {
-                        
+
                         LOG.log(SEVERE, ERROR_MESSAGE, ex);
                     }
                 }
@@ -179,7 +179,7 @@ public class CPanel extends JPanel {
             setLayout(layout);
         }
     }
-    
+
     /**
      * Indicates weather the Encryption Field is valid or invalid
      *
@@ -188,7 +188,7 @@ public class CPanel extends JPanel {
     public boolean cryptIsValid() {
         return content == null ? false : content.cryptIsValid();
     }
-    
+
     /**
      * Indicates weather the Encryption Field exists or does not exist.
      *
@@ -197,7 +197,7 @@ public class CPanel extends JPanel {
     public boolean cryptExists() {
         return content != null;
     }
-    
+
     /**
      * Encrypts the given text width specific Encryption rules.
      *
@@ -207,7 +207,7 @@ public class CPanel extends JPanel {
     public String encrypt(String text) {
         return content.encrypt(text);
     }
-    
+
     /**
      * Decrypts the given text with specific Decryption rules.
      *

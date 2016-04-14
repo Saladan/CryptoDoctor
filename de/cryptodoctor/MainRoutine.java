@@ -3,6 +3,7 @@ package de.cryptodoctor;
 import static de.cryptodoctor.Application.ERROR_MESSAGE;
 import static de.cryptodoctor.Application.FATAL_MESSAGE;
 import static java.lang.System.exit;
+import java.util.ArrayList;
 import java.util.List;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
@@ -26,11 +27,12 @@ public class MainRoutine implements Runnable {
     }
 
     /**
-     *
+     * @todo Javadoc
      */
     @Override
     public void run() {
         application.getFrame().setVisible(true);
+        exceptions = new ArrayList<>(0);
         while (application.isRunning()) {
             printFirstException();
         }
@@ -60,10 +62,10 @@ public class MainRoutine implements Runnable {
     }
 
     /**
-     * Adds an exception to the list of pending exceptions. The list is then
+     * Adds an exception to the list of pending exceptions. This list is then
      * being logged.
      *
-     * @param e
+     * @param e the exception to be logged
      */
     public void logException(Exception e) {
         exceptions.add(e);

@@ -12,7 +12,7 @@ import static org.jdesktop.layout.GroupLayout.LEADING;
 import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
 /**
- *
+ * @todo Javadoc
  * @author Saladan
  */
 public class CCaesar extends CContent {
@@ -23,7 +23,7 @@ public class CCaesar extends CContent {
     JLabel labelC;
 
     /**
-     *
+     * @todo Javadoc
      */
     public CCaesar() {
         sliderC = new JSlider();

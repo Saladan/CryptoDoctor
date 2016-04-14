@@ -15,7 +15,7 @@ import static org.jdesktop.layout.GroupLayout.LEADING;
 import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
 /**
- *
+ * @todo Javadoc
  * @author Saladan
  */
 public class CBinary extends CContent {
@@ -27,7 +27,7 @@ public class CBinary extends CContent {
     private final JCheckBox checkC;
 
     /**
-     *
+     * @todo Javadoc
      */
     public CBinary() {
         editC = new JTextField();
