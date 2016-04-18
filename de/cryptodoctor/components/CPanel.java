@@ -1,31 +1,29 @@
 package de.cryptodoctor.components;
 
 import de.cryptodoctor.Application;
-import static de.cryptodoctor.Application.CIPHER_CLASSES;
-import static de.cryptodoctor.Application.CIPHER_NAMES;
+import static de.cryptodoctor.components.CCipher.getCipherName;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import static java.awt.Color.black;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import static java.lang.Short.MAX_VALUE;
-import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import javax.swing.border.LineBorder;
+import javax.swing.border.Border;
 import org.jdesktop.layout.GroupLayout;
 import static org.jdesktop.layout.GroupLayout.CENTER;
-import static de.cryptodoctor.Application.NORMAL_MESSAGE;
-import static java.util.logging.Logger.getLogger;
 
 /**
- * @todo Javadoc
+ * @todo Javadoc, planned: structure change
  * @author Saladan
  */
 public class CPanel extends JPanel {
@@ -34,58 +32,50 @@ public class CPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private final Application application;
     private final JPanel menu;
-    private CContent content;
-    private JButton hide;
+    private final JButton hide;
     private final ImageIcon iClose, iOpen;
+    private final CCipher content;
     private boolean opened;
 
     /**
      * @todo Javadoc
      * @param a
+     * @param Type
      */
-    public CPanel(Application a) {
+    public CPanel(Application a, Class<? extends CCipher> Type) {
         application = a;
-        setBorder(new LineBorder(black));
-        final JComboBox<String> combo = new JComboBox<>(CIPHER_NAMES);
-        combo.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == 1) {
-                    try {
-                        if (content != null) {
-                            remove(content);
-                        }
-                        int index = combo.getSelectedIndex();
-                        boolean exists = index > 0;
-                        content = exists ? (CContent) CIPHER_CLASSES[index].newInstance() : null;
-                        hide.setEnabled(exists);
-                        update(exists);
-                    } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {
-
-                        LOG.log(SEVERE, NORMAL_MESSAGE, ex);
-                    }
-                }
+        menu = new JPanel();
+        try {
+            content = Type.newInstance();
+        } catch (InstantiationException ex) {
+            InstantiationException n = new InstantiationException("ERROR_FATAL 0: Class object cannot be instantiated");
+            n.setStackTrace(ex.getStackTrace());
+            application.getMainRoutine().logException(n);
+            while (true) {
             }
-        });
+        } catch (IllegalAccessException ex) {
+            IllegalAccessException n = new IllegalAccessException("ERROR_FATAL 1: No access to constructor");
+            n.setStackTrace(ex.getStackTrace());
+            application.getMainRoutine().logException(n);
+            while (true) {
+            }
+        }
+        hide = new JButton();
+        opened = true;
+        iClose = createIcon("icons:left");
+        iOpen = createIcon("icons:right");
+        initObjects();
+    }
+
+    private void initObjects() {
+        setBorder(new CPanelBorder());
+        JLabel name = new JLabel(getCipherName(content.getClass()));
         JButton moveUp = new JButton();
         JButton moveDown = new JButton();
         JButton close = new JButton();
-        final CPanel myself = this;
-        close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                application.getFrame().removeCrypt(myself);
-            }
-        });
-        hide = new JButton();
-        hide.setEnabled(false);
-        hide.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setOpened(!opened);
-            }
-        });
-        Dimension size = new Dimension(20, 20);
+        close.addActionListener(new CloseAction(this));
+        hide.addActionListener(new HideAction());
+        Dimension size = new Dimension(16, 16);
         moveUp.setIcon(createIcon("icons:up"));
         moveUp.setMinimumSize(size);
         moveUp.setPreferredSize(size);
@@ -101,8 +91,6 @@ public class CPanel extends JPanel {
         hide.setMinimumSize(size);
         hide.setPreferredSize(size);
         hide.setMaximumSize(size);
-        iClose = createIcon("icons:left");
-        iOpen = createIcon("icons:right");
         JToolBar control = new JToolBar();
         control.setFloatable(false);
         control.setBorder(null);
@@ -110,34 +98,35 @@ public class CPanel extends JPanel {
         control.add(moveDown);
         control.add(hide);
         control.add(close);
-        menu = new JPanel();
-        size = new Dimension(0, 25);
+        size = new Dimension(0, 20);
         menu.setMinimumSize(size);
         menu.setPreferredSize(size);
-        size = new Dimension(MAX_VALUE, 25);
+        size = new Dimension(MAX_VALUE, 20);
         menu.setMaximumSize(size);
         GroupLayout lMenu = new GroupLayout(menu);
         menu.setLayout(lMenu);
         lMenu.setHorizontalGroup(
                 lMenu.createSequentialGroup()
-                .add(combo, 0, 0, MAX_VALUE)
                 .add(2, 2, 2)
-                .add(control, 80, 80, 80));
+                .add(name, 0, 0, MAX_VALUE)
+                .add(2, 2, 2)
+                .add(control, 64, 64, 64)
+                .add(2, 2, 2));
         lMenu.setVerticalGroup(
                 lMenu.createParallelGroup(CENTER)
-                .add(combo)
-                .add(control, 20, 20, 20));
-        content = null;
-        opened = false;
-        hide.setIcon(iOpen);
+                .add(name, 20, 20, 20)
+                .add(control, 16, 16, 16));
         GroupLayout layout = new GroupLayout(this);
         layout.setHorizontalGroup(
                 layout.createParallelGroup()
-                .add(menu));
+                .add(menu)
+                .add(content));
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                .add(menu));
+                .add(menu)
+                .add(content));
         setLayout(layout);
+        setOpened(true);
     }
 
     /**
@@ -151,42 +140,12 @@ public class CPanel extends JPanel {
     }
 
     /**
-     *
-     * @param enabled
-     */
-    public void update(boolean enabled) {
-        opened = enabled;
-        hide.setIcon(enabled ? iClose : iOpen);
-        if (enabled) {
-            GroupLayout layout = new GroupLayout(this);
-            layout.setHorizontalGroup(
-                    layout.createParallelGroup()
-                    .add(menu)
-                    .add(content));
-            layout.setVerticalGroup(
-                    layout.createSequentialGroup()
-                    .add(menu)
-                    .add(content));
-            setLayout(layout);
-        } else {
-            GroupLayout layout = new GroupLayout(this);
-            layout.setHorizontalGroup(
-                    layout.createParallelGroup()
-                    .add(menu));
-            layout.setVerticalGroup(
-                    layout.createSequentialGroup()
-                    .add(menu));
-            setLayout(layout);
-        }
-    }
-
-    /**
      * Indicates weather the Encryption Field is valid or invalid
      *
      * @return true if field is valid, false otherwise
      */
     public boolean cryptIsValid() {
-        return content == null ? false : content.cryptIsValid();
+        return content.cryptIsValid();
     }
 
     /**
@@ -217,4 +176,57 @@ public class CPanel extends JPanel {
     public String decrypt(String text) {
         return content.decrypt(text);
     }
+
+    private static class CPanelBorder implements Border {
+
+        private final Insets insets;
+
+        CPanelBorder() {
+            insets = new Insets(0, 1, 1, 1);
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.setColor(black);
+            g.drawLine(x, y, x, y + height - 1);
+            g.drawLine(x, y + height - 1, x + width - 1, y + height - 1);
+            g.drawLine(x + width - 1, y + height - 1, x + width - 1, y);
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return insets;
+        }
+
+        @Override
+        public boolean isBorderOpaque() {
+            return false;
+        }
+    }
+
+    private class HideAction implements ActionListener {
+
+        HideAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setOpened(!opened);
+        }
+    }
+
+    private class CloseAction implements ActionListener {
+
+        private final CPanel self;
+
+        CloseAction(CPanel self) {
+            this.self = self;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            application.getFrame().removeCrypt(self);
+        }
+    }
+
 }

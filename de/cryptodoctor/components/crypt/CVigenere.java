@@ -1,6 +1,6 @@
 package de.cryptodoctor.components.crypt;
 
-import de.cryptodoctor.components.CContent;
+import de.cryptodoctor.components.CCipher;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -18,12 +18,14 @@ import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
  * @todo Javadoc
  * @author Saladan
  */
-public class CVigenere extends CContent {
+public class CVigenere extends CCipher {
+
+    public static final String CIPHER_NAME = "Vigenère-Verschlüsselung";
 
     private static final Logger LOG = getLogger(CVigenere.class.getName());
     private static final long serialVersionUID = 1L;
-    JTextField editC;
-    JLabel labelC;
+    private final JTextField editC;
+    private final JLabel labelC;
 
     /**
      * @todo Javadoc
@@ -31,11 +33,12 @@ public class CVigenere extends CContent {
     public CVigenere() {
         editC = new JTextField();
         labelC = new JLabel();
+        initObjects();
+    }
 
+    private void initObjects() {
         editC.setDocument(new UpperCaseDocument());
-
         labelC.setText("Verschlüsselungswort:");
-
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(layout.createSequentialGroup()
@@ -50,15 +53,9 @@ public class CVigenere extends CContent {
                 .add(3, 3, 3)
                 .add(editC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
                 .add(6, 6, 6));
-        super.initSize(21 + labelC.getPreferredSize().height + editC.getPreferredSize().height);
+        super.initHeight(21 + labelC.getPreferredSize().height + editC.getPreferredSize().height);
     }
 
-    /**
-     * Encrypts the given text width specific Encryption rules.
-     *
-     * @param text The text to be encrypted
-     * @return The encrypted text
-     */
     @Override
     public String encrypt(String text) {
         char[] t = editC.getText().toCharArray();
@@ -69,12 +66,6 @@ public class CVigenere extends CContent {
         return crypt(text.toCharArray(), c);
     }
 
-    /**
-     * Decrypts the given text with specific Decryption rules.
-     *
-     * @param text The text to be decrypted
-     * @return The decrypted text
-     */
     @Override
     public String decrypt(String text) {
         char[] t = editC.getText().toCharArray();
@@ -102,17 +93,12 @@ public class CVigenere extends CContent {
         return new String(raw);
     }
 
-    /**
-     * Indicates weather the Encryption Field is valid or invalid
-     *
-     * @return true if field is valid, false otherwise
-     */
     @Override
     public boolean cryptIsValid() {
         if (editC.getText().trim().isEmpty()) {
             return false;
         }
-        List<Character> a = new ArrayList<>();
+        List<Character> a = new ArrayList<>(0);
         for (char c = 'A'; c <= 'Z'; c++) {
             a.add(c);
         }
@@ -133,14 +119,13 @@ public class CVigenere extends CContent {
 
         @Override
         public void insertString(int offset, String s, AttributeSet attributeSet) throws BadLocationException {
-            s = s.toUpperCase();
-            for (char c : s.toCharArray()) {
+            String newS = s.toUpperCase();
+            for (char c : newS.toCharArray()) {
                 if (c < 'A' || c > 'Z') {
                     return;
                 }
             }
-            doLayout();
-            super.insertString(offset, s, attributeSet);
+            super.insertString(offset, newS, attributeSet);
         }
     }
 

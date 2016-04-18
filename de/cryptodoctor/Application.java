@@ -1,5 +1,6 @@
 package de.cryptodoctor;
 
+import de.cryptodoctor.components.CCipher;
 import de.cryptodoctor.components.CFrame;
 import de.cryptodoctor.components.crypt.CBinary;
 import de.cryptodoctor.components.crypt.CCaesar;
@@ -17,13 +18,11 @@ public class Application {
 
     /**
      * Classes of all Ciphers that have been implemented
+     *
+     * @needhelp Warnings unchecked and rawtypes
      */
-    public static final Class[] CIPHER_CLASSES = new Class[]{null, CCaesar.class, CVigenere.class, CBinary.class};
+    public static final Class<CCipher>[] SYMMETRIC_CIPHERS = new Class[]{CCaesar.class, CVigenere.class, CBinary.class};
 
-    /**
-     * Names of all Ciphers that have been implemented
-     */
-    public static final String[] CIPHER_NAMES = new String[]{"<bitte wählen>", "Cäsar-Verschlüsselung", "Vigenère-Verschlüsselung", "Binäre Verschlüsselung (XOR)"};
     /**
      * The error message in case of an exception
      */
@@ -54,7 +53,7 @@ public class Application {
     }
 
     /**
-     * Indicates weather the program is running.
+     * Indicates weather the program is running or not.
      *
      * @return true if the Application is running, false otherwise
      */

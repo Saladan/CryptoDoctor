@@ -1,16 +1,16 @@
 package de.cryptodoctor;
 
 import static de.cryptodoctor.Application.FATAL_MESSAGE;
+import static de.cryptodoctor.Application.NORMAL_MESSAGE;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.toHexString;
 import static java.lang.System.exit;
 import java.util.ArrayList;
 import java.util.List;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
-import static de.cryptodoctor.Application.NORMAL_MESSAGE;
-import static java.lang.Integer.parseInt;
-import static java.util.logging.Level.INFO;
 import static java.util.logging.Logger.getLogger;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -20,9 +20,10 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class MainRoutine implements Runnable {
 
     private static final Logger LOG = getLogger(MainRoutine.class.getName());
-    private static final int ERROR_FATAL = 2;
-    private static final int ERROR_NORMAL = 1;
-    private static final int ERROR_USER = 0;
+    private static final int NO_ERROR = 0;
+    private static final int ERROR_USER = 1;
+    private static final int ERROR_NORMAL = 2;
+    private static final int ERROR_FATAL = 3;
 
     private final Application application;
 
@@ -58,16 +59,18 @@ public class MainRoutine implements Runnable {
             throw exceptions.remove(0);
         } catch (Exception e) {
             switch (getType(e)) {
+                case NO_ERROR:
+                    break;
+                case ERROR_USER:
+                    LOG.log(SEVERE, "{0}\nat: {1}", new Object[]{e.getMessage(), e.getStackTrace()[0]});
+                    handleException(e);
+                    break;
                 case ERROR_NORMAL:
                     LOG.log(SEVERE, NORMAL_MESSAGE, e);
                     break;
                 case ERROR_FATAL:
                     LOG.log(SEVERE, FATAL_MESSAGE, e);
                     application.setRunning(false);
-                    break;
-                case ERROR_USER:
-                    LOG.log(SEVERE, "{0}\nat: {1}", new Object[]{e.getMessage(), e.getStackTrace()[0]});
-                    handleException(e);
                     break;
             }
         }
@@ -81,11 +84,14 @@ public class MainRoutine implements Runnable {
         if (e.getMessage().startsWith("ERROR_FATAL")) {
             return ERROR_FATAL;
         }
-        return ERROR_NORMAL;
+        if (e.getMessage().startsWith("ERROR_NORMAL")) {
+            return ERROR_NORMAL;
+        }
+        return NO_ERROR;
     }
 
     private void handleException(Exception e) {
-        int i = parseInt(e.getMessage().split(" ")[1].split(":")[0],16);
+        int i = parseInt(e.getMessage().split(" ")[1].split(":")[0], 16);
         switch (i) {
             case 0x0:
                 showMessageDialog(application.getFrame(), "Es sind noch nicht alle Verschlüsselungen definiert!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
@@ -94,9 +100,9 @@ public class MainRoutine implements Runnable {
                 showMessageDialog(application.getFrame(), "Es gibt einen Fehler in der Verschlüsselungsdefinition!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
                 break;
             default:
-                logException(new UnsupportedOperationException("ERROR_NORMAL 0: no handler specified for ERROR_USER " + Integer.toHexString(i)));
+                logException(new UnsupportedOperationException("ERROR_NORMAL 0: no handler specified for ERROR_USER " + toHexString(i)));
         }
-        
+
     }
 
     /**
