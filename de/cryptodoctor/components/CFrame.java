@@ -3,8 +3,8 @@ package de.cryptodoctor.components;
 import de.cryptodoctor.Application;
 import static de.cryptodoctor.Application.FRAME_HEIGHT;
 import static de.cryptodoctor.Application.FRAME_WIDTH;
-import static de.cryptodoctor.Application.SYMMETRIC_CIPHERS;
-import static de.cryptodoctor.components.CCipher.getCipherName;
+import de.cryptodoctor.components.cipher.Cipher;
+import static de.cryptodoctor.components.cipher.Cipher.values;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Dimension;
@@ -19,7 +19,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -34,7 +33,6 @@ import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 import org.jdesktop.layout.GroupLayout.ParallelGroup;
 import org.jdesktop.layout.GroupLayout.SequentialGroup;
 import static org.jdesktop.layout.GroupLayout.TRAILING;
-import sun.lwawt.macosx.CWrapper;
 
 /**
  * @todo Javadoc
@@ -94,9 +92,9 @@ public class CFrame extends JFrame {
         //menu
         popup.setLabel("Neue Verschlüsselung");
         JPopupMenu sym = new JPopupMenu("Symmetrische Verschlüsselungsverfahren");
-        for (Class<? extends CCipher> c : SYMMETRIC_CIPHERS) {
-            JMenuItem i = new JMenuItem(getCipherName(c));
-            i.addActionListener(new AddAction(c));
+        for (Cipher c : values()) {
+            JMenuItem i = new JMenuItem(c.getName());
+            i.addActionListener(new AddAction(c.getT()));
             sym.add(i);
             popup.add(i);
         }

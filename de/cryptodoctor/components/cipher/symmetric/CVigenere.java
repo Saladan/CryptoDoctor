@@ -1,4 +1,4 @@
-package de.cryptodoctor.components.crypt;
+package de.cryptodoctor.components.cipher.symmetric;
 
 import de.cryptodoctor.components.CCipher;
 import java.util.ArrayList;
@@ -20,6 +20,9 @@ import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
  */
 public class CVigenere extends CCipher {
 
+    /**
+     *
+     */
     public static final String CIPHER_NAME = "Vigenère-Verschlüsselung";
 
     private static final Logger LOG = getLogger(CVigenere.class.getName());

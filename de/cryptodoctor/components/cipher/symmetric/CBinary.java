@@ -1,4 +1,4 @@
-package de.cryptodoctor.components.crypt;
+package de.cryptodoctor.components.cipher.symmetric;
 
 import de.cryptodoctor.components.CCipher;
 import static java.lang.Math.min;
@@ -20,6 +20,9 @@ import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
  */
 public class CBinary extends CCipher {
 
+    /**
+     *
+     */
     public static final String CIPHER_NAME = "Binäre Verschlüsselung (XOR)";
 
     private static final Logger LOG = getLogger(CBinary.class.getName());

@@ -1,4 +1,4 @@
-package de.cryptodoctor.components.crypt;
+package de.cryptodoctor.components.cipher.symmetric;
 
 import de.cryptodoctor.components.CCipher;
 import java.util.logging.Logger;
@@ -17,6 +17,9 @@ import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
  */
 public class CCaesar extends CCipher {
 
+    /**
+     *
+     */
     public static final String CIPHER_NAME = "Cäsar-Verschlüsselung";
 
     private static final Logger LOG = getLogger(CCaesar.class.getName());

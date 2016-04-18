@@ -6,7 +6,7 @@ import static java.util.logging.Logger.getLogger;
 /**
  * @todo Javadoc
  * @author Saladan
- * @version v4.3.2-pre-alpha
+ * @version v4.4.0-pre-alpha
  */
 public class CryptoDoctor {
 

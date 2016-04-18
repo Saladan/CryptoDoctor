@@ -1,10 +1,6 @@
 package de.cryptodoctor;
 
-import de.cryptodoctor.components.CCipher;
 import de.cryptodoctor.components.CFrame;
-import de.cryptodoctor.components.crypt.CBinary;
-import de.cryptodoctor.components.crypt.CCaesar;
-import de.cryptodoctor.components.crypt.CVigenere;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 
@@ -15,13 +11,6 @@ import static java.util.logging.Logger.getLogger;
 public class Application {
 
     private static final Logger LOG = getLogger(Application.class.getName());
-
-    /**
-     * Classes of all Ciphers that have been implemented
-     *
-     * @needhelp Warnings unchecked and rawtypes
-     */
-    public static final Class<CCipher>[] SYMMETRIC_CIPHERS = new Class[]{CCaesar.class, CVigenere.class, CBinary.class};
 
     /**
      * The error message in case of an exception

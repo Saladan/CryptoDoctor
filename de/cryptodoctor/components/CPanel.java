@@ -1,7 +1,8 @@
 package de.cryptodoctor.components;
 
 import de.cryptodoctor.Application;
-import static de.cryptodoctor.components.CCipher.getCipherName;
+import de.cryptodoctor.components.cipher.Cipher;
+import static de.cryptodoctor.components.cipher.Cipher.getNameOf;
 import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Component;
@@ -69,7 +70,7 @@ public class CPanel extends JPanel {
 
     private void initObjects() {
         setBorder(new CPanelBorder());
-        JLabel name = new JLabel(getCipherName(content.getClass()));
+        JLabel name = new JLabel(getNameOf(content.getClass()));
         JButton moveUp = new JButton();
         JButton moveDown = new JButton();
         JButton close = new JButton();
