@@ -18,6 +18,8 @@ import static java.util.logging.Logger.getLogger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -32,6 +34,7 @@ import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 import org.jdesktop.layout.GroupLayout.ParallelGroup;
 import org.jdesktop.layout.GroupLayout.SequentialGroup;
 import static org.jdesktop.layout.GroupLayout.TRAILING;
+import sun.lwawt.macosx.CWrapper;
 
 /**
  * @todo Javadoc
@@ -43,6 +46,7 @@ public class CFrame extends JFrame {
     private static final long serialVersionUID = 1L;
     private final Application application;
     private final JButton bNew, bEnter;
+    private final JMenu mNew;
     private final JPopupMenu popup;
     private final JToggleButton tEnc, tDec;
     private final JPanel tabs, crypt, list;
@@ -74,6 +78,7 @@ public class CFrame extends JFrame {
         encrypts = new ArrayList<>(0);
         decrypts = new ArrayList<>(0);
         layout = new GroupLayout(list);
+        mNew = new JMenu();
         popup = new JPopupMenu();
         initObjects();
     }
@@ -86,7 +91,8 @@ public class CFrame extends JFrame {
         setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         setMaximumSize(new Dimension(MAX_VALUE, MAX_VALUE));
         setLocationRelativeTo(null);
-        //buttons
+        //menu
+        popup.setLabel("Neue Verschlüsselung");
         JPopupMenu sym = new JPopupMenu("Symmetrische Verschlüsselungsverfahren");
         for (Class<? extends CCipher> c : SYMMETRIC_CIPHERS) {
             JMenuItem i = new JMenuItem(getCipherName(c));
@@ -95,6 +101,8 @@ public class CFrame extends JFrame {
             popup.add(i);
         }
         //popup.add(sym);
+        mNew.add(popup);
+        //buttons
         bNew.setText("Neue Verschlüsselung");
         bNew.addActionListener(new ShowNewAction());
         bEnter.setIcon(createIcon("icons:enter"));
@@ -264,7 +272,8 @@ public class CFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            popup.show(bNew, 0, bNew.getHeight());
+            popup.setVisible(false);
+            popup.show(bNew, 0, 0);
         }
     }
 
