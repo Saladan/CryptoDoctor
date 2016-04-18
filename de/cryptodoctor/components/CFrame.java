@@ -225,12 +225,8 @@ public class CFrame extends JFrame {
      */
     public void execute() {
         for (CPanel c : encrypts) {
-            if (!c.cryptExists()) {
-                application.getMainRoutine().logException(new NullPointerException("ERROR_USER 0: No content defined"));
-                return;
-            }
             if (!c.cryptIsValid()) {
-                application.getMainRoutine().logException(new IllegalArgumentException("ERROR_USER 1: Crypt not valid"));
+                application.getMainRoutine().logException(new IllegalArgumentException("ERROR_USER 0: Crypt not valid"));
                 return;
             }
         }

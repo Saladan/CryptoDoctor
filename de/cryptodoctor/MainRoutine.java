@@ -94,9 +94,6 @@ public class MainRoutine implements Runnable {
         int i = parseInt(e.getMessage().split(" ")[1].split(":")[0], 16);
         switch (i) {
             case 0x0:
-                showMessageDialog(application.getFrame(), "Es sind noch nicht alle Verschlüsselungen definiert!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
-                break;
-            case 0x1:
                 showMessageDialog(application.getFrame(), "Es gibt einen Fehler in der Verschlüsselungsdefinition!\n\nBreche ab.", "Achtung.", ERROR_MESSAGE, null/*Icon*/);
                 break;
             default:

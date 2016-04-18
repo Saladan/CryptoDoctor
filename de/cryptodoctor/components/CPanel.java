@@ -23,7 +23,7 @@ import org.jdesktop.layout.GroupLayout;
 import static org.jdesktop.layout.GroupLayout.CENTER;
 
 /**
- * @todo Javadoc, planned: structure change
+ * @todo Javadoc
  * @author Saladan
  */
 public class CPanel extends JPanel {
@@ -146,15 +146,6 @@ public class CPanel extends JPanel {
      */
     public boolean cryptIsValid() {
         return content.cryptIsValid();
-    }
-
-    /**
-     * Indicates weather the Encryption Field exists or does not exist.
-     *
-     * @return true if field exists, false otherwise
-     */
-    public boolean cryptExists() {
-        return content != null;
     }
 
     /**
