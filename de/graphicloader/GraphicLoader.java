@@ -45,7 +45,7 @@ public class GraphicLoader {
      * 
      * The global location for textures is "/assets/textures/". Here is
      * added the folder and the name of the texture file. The ".png" is
-     * automatically added.
+     * automatically added, if not already there.
      *
      * @param location the location of texture in form "folder:name"
      * @return the {@link ImageIcon} at this location
@@ -65,7 +65,7 @@ public class GraphicLoader {
      * 
      * The global location for textures is "/assets/textures/". Here is added
      * the folder and the name of the texture file. The ".png" is automatically
-     * added.
+     * added, if not already there.
      *
      * @param location the location of texture in form "folder:name"
      * @param force force the creation of an {@link ImageIcon}
@@ -80,7 +80,7 @@ public class GraphicLoader {
             for (String s : loc) {
                 path += "/" + s;
             }
-            if (path.endsWith(".png")) {
+            if (!path.endsWith(".png")) {
                 path += ".png";
             }
             if (!ICONS.containsKey(location)) {
