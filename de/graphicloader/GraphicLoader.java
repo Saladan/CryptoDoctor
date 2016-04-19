@@ -18,7 +18,9 @@ public class GraphicLoader {
     /**
      * Returns the texture at the given location as {@link ImageIcon}. If the
      * icon was already loaded, this icon is returned, without creating a new
-     * one. The global location for textures is "/assets/textures/". Here is
+     * one.
+     * 
+     * The global location for textures is "/assets/textures/". Here is
      * added the folder and the name of the texture file. The ".png" is
      * automatically added.
      *
@@ -37,6 +39,7 @@ public class GraphicLoader {
      * returned, without creating a new one, if {@code forced == true}, the
      * routine creates a new icon, no matter if it already exists. If the icon
      * was not already loaded {@code forced == true} then two icons are created.
+     * 
      * The global location for textures is "/assets/textures/". Here is added
      * the folder and the name of the texture file. The ".png" is automatically
      * added.
