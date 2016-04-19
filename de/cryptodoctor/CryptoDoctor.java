@@ -6,14 +6,16 @@ import static java.util.logging.Logger.getLogger;
 /**
  * @todo Javadoc
  * @author Saladan
- * @version v4.4.0-pre-alpha
+ * @version v4.5.0-pre-alpha
  */
 public class CryptoDoctor {
 
     private static final Logger LOG = getLogger(CryptoDoctor.class.getName());
 
     /**
-     * @todo Javadoc
+     * This is the main routine. It is called automatically by the Java Virtual
+     * Machine (JVM).
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {

@@ -5,7 +5,7 @@ import static de.cryptodoctor.Application.FRAME_HEIGHT;
 import static de.cryptodoctor.Application.FRAME_WIDTH;
 import de.cryptodoctor.components.cipher.Cipher;
 import static de.cryptodoctor.components.cipher.Cipher.values;
-import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
+import static de.graphicloader.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -98,7 +98,7 @@ public class CFrame extends JFrame {
             sym.add(i);
             popup.add(i);
         }
-        //popup.add(sym);
+        popup.add(sym);
         mNew.add(popup);
         //buttons
         bNew.setText("Neue Verschlüsselung");
@@ -259,7 +259,17 @@ public class CFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            addCrypt(new CPanel(application, c));
+        try {
+            CFrame.this.addCrypt(new CPanel(application, c));
+        } catch (InstantiationException ex) {
+            InstantiationException n = new InstantiationException("ERROR_FATAL 0: Class object cannot be instantiated");
+            n.setStackTrace(ex.getStackTrace());
+            application.getMainRoutine().logException(n);
+        } catch (IllegalAccessException ex) {
+            IllegalAccessException n = new IllegalAccessException("ERROR_FATAL 1: No access to constructor");
+            n.setStackTrace(ex.getStackTrace());
+            application.getMainRoutine().logException(n);
+        }
         }
     }
 
