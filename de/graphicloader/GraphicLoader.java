@@ -30,8 +30,11 @@ import static java.util.logging.Logger.getLogger;
 import javax.swing.ImageIcon;
 
 /**
+ * GraphicLoader is used to get ImageIcons or other texture data from .png files
+ * wich are located at assets.textures.
  *
  * @author Saladan
+ * @version v1.0.0
  */
 public class GraphicLoader {
 
@@ -42,10 +45,10 @@ public class GraphicLoader {
      * Returns the texture at the given location as {@link ImageIcon}. If the
      * icon was already loaded, this icon is returned, without creating a new
      * one.
-     * 
-     * The global location for textures is "/assets/textures/". Here is
-     * added the folder and the name of the texture file. The ".png" is
-     * automatically added, if not already there.
+     *
+     * The global location for textures is "/assets/textures/". Here is added
+     * the folder and the name of the texture file. The ".png" is automatically
+     * added, if not already there.
      *
      * @param location the location of texture in form "folder:name"
      * @return the {@link ImageIcon} at this location
@@ -62,7 +65,7 @@ public class GraphicLoader {
      * returned, without creating a new one, if {@code forced == true}, the
      * routine creates a new icon, no matter if it already exists. If the icon
      * was not already loaded {@code forced == true} then two icons are created.
-     * 
+     *
      * The global location for textures is "/assets/textures/". Here is added
      * the folder and the name of the texture file. The ".png" is automatically
      * added, if not already there.
