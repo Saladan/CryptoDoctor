@@ -21,28 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package de.cryptodoctor;
+package de.cryptodoctor.components;
 
-import java.util.logging.Logger;
-import static java.util.logging.Logger.getLogger;
+import java.awt.Dimension;
+import javax.swing.JPanel;
 
 /**
- * @todo Javadoc
+ *
  * @author Saladan
- * @version v4.5.1-pre-alpha
  */
-public class CryptoDoctor {
+public abstract class CCipher extends JPanel {
 
-    private static final Logger LOG = getLogger(CryptoDoctor.class.getName());
+    private static final long serialVersionUID = 1L;
 
     /**
-     * This is the main routine. It is called automatically by the Java Virtual
-     * Machine (JVM).
+     * Encrypts the given text width specific Encryption rules.
      *
-     * @param args the command line arguments
+     * @param text The text to be encrypted
+     * @return The encrypted text
      */
-    public static void main(String[] args) {
-        Application application = new Application();
-        new Thread(application.getMainRoutine()).start();
+    public abstract String encrypt(String text);
+
+    /**
+     * Decrypts the given text with specific Decryption rules.
+     *
+     * @param text The text to be decrypted
+     * @return The decrypted text
+     */
+    public abstract String decrypt(String text);
+
+    /**
+     * Indicates weather the Encryption Field is valid or invalid
+     *
+     * @return true if field is valid, false otherwise
+     */
+    public abstract boolean cryptIsValid();
+
+    /**
+     * @todo Javadoc
+     * @param i
+     */
+    public void initHeight(int i) {
+        Dimension size = new Dimension(0, i);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        size = new Dimension(250, i);
+        setMaximumSize(size);
     }
 }

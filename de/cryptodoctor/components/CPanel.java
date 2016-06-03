@@ -1,88 +1,95 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2016 David Ehnert (Saladan).
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 package de.cryptodoctor.components;
 
-import de.cryptodoctor.Info;
-import static de.cryptodoctor.Info.CIPHER_CLASSES;
-import static de.cryptodoctor.Info.CIPHER_NAMES;
-import static de.cryptodoctor.Info.ERROR_MESSAGE;
-import static de.cryptodoctor.Info.frame;
-import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
+import de.cryptodoctor.Application;
+import static de.cryptodoctor.components.cipher.Cipher.getNameOf;
+import static de.graphicloader.GraphicLoader.createIcon;
 import static java.awt.Color.black;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import static java.lang.Short.MAX_VALUE;
-import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import javax.swing.border.LineBorder;
-import org.jdesktop.layout.GroupLayout;
-import static org.jdesktop.layout.GroupLayout.CENTER;
-import static java.util.logging.Logger.getLogger;
+import javax.swing.border.Border;
+import javax.swing.GroupLayout;
+import static javax.swing.GroupLayout.Alignment.CENTER;
 
 /**
- *
+ * @todo Javadoc
  * @author Saladan
  */
 public class CPanel extends JPanel {
 
     private static final Logger LOG = getLogger(CPanel.class.getName());
     private static final long serialVersionUID = 1L;
+    private final Application application;
     private final JPanel menu;
-    private CContent content;
-    private JButton hide;
+    private final JButton hide;
     private final ImageIcon iClose, iOpen;
+    private final CCipher content;
     private boolean opened;
 
     /**
+     * Creates a new CPanel object. A CPanel is a JPanel that holds all
+     * information about a cipher. Here the user can change the configuration
+     * for encryption and decryption.
      *
+     * @throws java.lang.InstantiationException
+     * @throws java.lang.IllegalAccessException
+     * @param a the application definition
+     * @param Type the class of the cipher to be shown
      */
-    public CPanel() {
-        setBorder(new LineBorder(black));
-        final JComboBox<String> combo = new JComboBox<>(CIPHER_NAMES);
-        combo.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == 1) {
-                    try {
-                        if (content != null) {
-                            remove(content);
-                        }
-                        int index = combo.getSelectedIndex();
-                        boolean exists = index > 0;
-                        content = exists ? (CContent) CIPHER_CLASSES[index].newInstance() : null;
-                        hide.setEnabled(exists);
-                        update(exists);
-                    } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {
-                        LOG.log(SEVERE, ERROR_MESSAGE, ex);
-                    }
-                }
-            }
-        });
+    public CPanel(Application a, Class<? extends CCipher> Type) throws InstantiationException, IllegalAccessException {
+        application = a;
+        menu = new JPanel();
+        content = Type.newInstance();
+        hide = new JButton();
+        opened = true;
+        iClose = createIcon("icons:left");
+        iOpen = createIcon("icons:right");
+        initObjects();
+    }
+
+    private void initObjects() {
+        setBorder(new CPanelBorder());
+        JLabel name = new JLabel(getNameOf(content.getClass()));
         JButton moveUp = new JButton();
         JButton moveDown = new JButton();
         JButton close = new JButton();
-        final CPanel myself = this;
-        close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.removeCrypt(myself);
-            }
-        });
-        hide = new JButton();
-        hide.setEnabled(false);
-        hide.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setOpened(!opened);
-            }
-        });
-        Dimension size = new Dimension(20, 20);
+        close.addActionListener(new CloseAction());
+        hide.addActionListener(new HideAction());
+        Dimension size = new Dimension(16, 16);
         moveUp.setIcon(createIcon("icons:up"));
         moveUp.setMinimumSize(size);
         moveUp.setPreferredSize(size);
@@ -98,8 +105,6 @@ public class CPanel extends JPanel {
         hide.setMinimumSize(size);
         hide.setPreferredSize(size);
         hide.setMaximumSize(size);
-        iClose = createIcon("icons:left");
-        iOpen = createIcon("icons:right");
         JToolBar control = new JToolBar();
         control.setFloatable(false);
         control.setBorder(null);
@@ -107,34 +112,35 @@ public class CPanel extends JPanel {
         control.add(moveDown);
         control.add(hide);
         control.add(close);
-        menu = new JPanel();
-        size = new Dimension(0, 25);
+        size = new Dimension(0, 20);
         menu.setMinimumSize(size);
         menu.setPreferredSize(size);
-        size = new Dimension(MAX_VALUE, 25);
+        size = new Dimension(MAX_VALUE, 20);
         menu.setMaximumSize(size);
         GroupLayout lMenu = new GroupLayout(menu);
         menu.setLayout(lMenu);
         lMenu.setHorizontalGroup(
                 lMenu.createSequentialGroup()
-                .add(combo, 0, 0, MAX_VALUE)
-                .add(2, 2, 2)
-                .add(control, 80, 80, 80));
+                .addGap(2)
+                .addComponent(name, 0, 0, MAX_VALUE)
+                .addGap(2)
+                .addComponent(control, 64, 64, 64)
+                .addGap(2));
         lMenu.setVerticalGroup(
                 lMenu.createParallelGroup(CENTER)
-                .add(combo)
-                .add(control, 20, 20, 20));
-        content = null;
-        opened = false;
-        hide.setIcon(iOpen);
+                .addComponent(name, 20, 20, 20)
+                .addComponent(control, 16, 16, 16));
         GroupLayout layout = new GroupLayout(this);
         layout.setHorizontalGroup(
                 layout.createParallelGroup()
-                .add(menu));
+                .addComponent(menu)
+                .addComponent(content));
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                .add(menu));
+                .addComponent(menu)
+                .addComponent(content));
         setLayout(layout);
+        setOpened(true);
     }
 
     /**
@@ -148,53 +154,14 @@ public class CPanel extends JPanel {
     }
 
     /**
-     *
-     * @param enabled
-     */
-    public void update(boolean enabled) {
-        opened = enabled;
-        hide.setIcon(enabled ? iClose : iOpen);
-        if (enabled) {
-            GroupLayout layout = new GroupLayout(this);
-            layout.setHorizontalGroup(
-                    layout.createParallelGroup()
-                    .add(menu)
-                    .add(content));
-            layout.setVerticalGroup(
-                    layout.createSequentialGroup()
-                    .add(menu)
-                    .add(content));
-            setLayout(layout);
-        } else {
-            GroupLayout layout = new GroupLayout(this);
-            layout.setHorizontalGroup(
-                    layout.createParallelGroup()
-                    .add(menu));
-            layout.setVerticalGroup(
-                    layout.createSequentialGroup()
-                    .add(menu));
-            setLayout(layout);
-        }
-    }
-    
-    /**
      * Indicates weather the Encryption Field is valid or invalid
      *
-     * @return true if field is valid, false otherwise
+     * @return {@code true} if field is valid, {@code false} otherwise
      */
     public boolean cryptIsValid() {
-        return content == null ? false : content.cryptIsValid();
+        return content.cryptIsValid();
     }
-    
-    /**
-     * Indicates weather the Encryption Field exists or does not exist.
-     *
-     * @return true if field exists, false otherwise
-     */
-    public boolean cryptExists() {
-        return content != null;
-    }
-    
+
     /**
      * Encrypts the given text width specific Encryption rules.
      *
@@ -204,7 +171,7 @@ public class CPanel extends JPanel {
     public String encrypt(String text) {
         return content.encrypt(text);
     }
-    
+
     /**
      * Decrypts the given text with specific Decryption rules.
      *
@@ -214,4 +181,54 @@ public class CPanel extends JPanel {
     public String decrypt(String text) {
         return content.decrypt(text);
     }
+
+    private static class CPanelBorder implements Border {
+
+        private final Insets insets;
+
+        CPanelBorder() {
+            insets = new Insets(0, 1, 1, 1);
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.setColor(black);
+            g.drawLine(x, y, x, y + height - 1);
+            g.drawLine(x, y + height - 1, x + width - 1, y + height - 1);
+            g.drawLine(x + width - 1, y + height - 1, x + width - 1, y);
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return insets;
+        }
+
+        @Override
+        public boolean isBorderOpaque() {
+            return false;
+        }
+    }
+
+    private class HideAction implements ActionListener {
+
+        HideAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            CPanel.this.setOpened(!opened);
+        }
+    }
+
+    private class CloseAction implements ActionListener {
+
+        CloseAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            application.getFrame().removeCrypt(CPanel.this);
+        }
+    }
+
 }

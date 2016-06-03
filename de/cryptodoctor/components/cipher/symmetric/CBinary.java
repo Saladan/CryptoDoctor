@@ -1,6 +1,29 @@
-package de.cryptodoctor.components.crypt;
+/*
+ * The MIT License
+ *
+ * Copyright 2016 David Ehnert (Saladan).
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+package de.cryptodoctor.components.cipher.symmetric;
 
-import de.cryptodoctor.components.CContent;
+import de.cryptodoctor.components.CCipher;
 import static java.lang.Math.min;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
@@ -15,10 +38,15 @@ import static org.jdesktop.layout.GroupLayout.LEADING;
 import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
 /**
- *
+ * @todo Javadoc
  * @author Saladan
  */
-public class CBinary extends CContent {
+public class CBinary extends CCipher {
+
+    /**
+     *
+     */
+    public static final String CIPHER_NAME = "Binäre Verschlüsselung (XOR)";
 
     private static final Logger LOG = getLogger(CBinary.class.getName());
     private static final long serialVersionUID = 1L;
@@ -27,20 +55,20 @@ public class CBinary extends CContent {
     private final JCheckBox checkC;
 
     /**
-     *
+     * @todo Javadoc
      */
     public CBinary() {
         editC = new JTextField();
         labelC = new JLabel();
         checkC = new JCheckBox();
+        initObjects();
+    }
 
+    private void initObjects() {
         editC.setDocument(new BinaryDocument());
-
         labelC.setText("Binärer Schlüssel:");
-
         checkC.setText("16 Bit Zeichen nutzen");
-        checkC.setSelected(true);
-
+        checkC.setSelected(false);
         GroupLayout layout = new GroupLayout(this);
         setLayout(layout);
         layout.setHorizontalGroup(layout.createSequentialGroup()
@@ -58,32 +86,20 @@ public class CBinary extends CContent {
                 .add(6, 6, 6)
                 .add(checkC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
                 .add(6, 6, 6));
-        super.initSize(27 + labelC.getPreferredSize().height + editC.getPreferredSize().height + checkC.getPreferredSize().height);
+        super.initHeight(27 + labelC.getPreferredSize().height + editC.getPreferredSize().height + checkC.getPreferredSize().height);
     }
 
-    /**
-     * Encrypts the given text width specific Encryption rules.
-     *
-     * @param text The text to be encrypted
-     * @return The encrypted text
-     */
     @Override
     public String encrypt(String text) {
         return crypt(text.toCharArray(), editC.getText());
     }
 
-    /**
-     * Decrypts the given text with specific Decryption rules.
-     *
-     * @param text The text to be decrypted
-     * @return The decrypted text
-     */
     @Override
     public String decrypt(String text) {
         return crypt(text.toCharArray(), editC.getText());
     }
 
-    String crypt(char[] raw, String key) {
+    private String crypt(char[] raw, String key) {
         int length = checkC.isSelected() ? 16 : 8;
         for (int i = 0; i < raw.length; i++) {
             int pos = (length * i) % key.length();
@@ -96,7 +112,7 @@ public class CBinary extends CContent {
         return new String(raw);
     }
 
-    char getChar(char[] raw) {
+    private char getChar(char[] raw) {
         char c = 0;
         for (int i = 0; i < raw.length; i++) {
             c += raw[raw.length - 1 - i] == '1' ? 1 << i : 0;
@@ -104,11 +120,6 @@ public class CBinary extends CContent {
         return c;
     }
 
-    /**
-     * Indicates weather the Encryption Field is valid or invalid
-     *
-     * @return true if field is valid, false otherwise
-     */
     @Override
     public boolean cryptIsValid() {
         return !editC.getText().isEmpty();
