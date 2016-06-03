@@ -1,3 +1,26 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2016 David Ehnert (Saladan).
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 package de.cryptodoctor.components;
 
 import de.cryptodoctor.Application;
@@ -5,7 +28,7 @@ import static de.cryptodoctor.Application.FRAME_HEIGHT;
 import static de.cryptodoctor.Application.FRAME_WIDTH;
 import de.cryptodoctor.components.cipher.Cipher;
 import static de.cryptodoctor.components.cipher.Cipher.values;
-import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
+import static de.graphicloader.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -98,7 +121,7 @@ public class CFrame extends JFrame {
             sym.add(i);
             popup.add(i);
         }
-        //popup.add(sym);
+        popup.add(sym);
         mNew.add(popup);
         //buttons
         bNew.setText("Neue Verschlüsselung");
@@ -259,7 +282,17 @@ public class CFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            addCrypt(new CPanel(application, c));
+        try {
+            CFrame.this.addCrypt(new CPanel(application, c));
+        } catch (InstantiationException ex) {
+            InstantiationException n = new InstantiationException("ERROR_FATAL 0: Class object cannot be instantiated");
+            n.setStackTrace(ex.getStackTrace());
+            application.getMainRoutine().logException(n);
+        } catch (IllegalAccessException ex) {
+            IllegalAccessException n = new IllegalAccessException("ERROR_FATAL 1: No access to constructor");
+            n.setStackTrace(ex.getStackTrace());
+            application.getMainRoutine().logException(n);
+        }
         }
     }
 

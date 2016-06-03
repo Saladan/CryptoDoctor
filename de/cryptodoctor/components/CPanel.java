@@ -1,9 +1,31 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2016 David Ehnert (Saladan).
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 package de.cryptodoctor.components;
 
 import de.cryptodoctor.Application;
-import de.cryptodoctor.components.cipher.Cipher;
 import static de.cryptodoctor.components.cipher.Cipher.getNameOf;
-import static de.cryptodoctor.graphic.GraphicLoader.createIcon;
+import static de.graphicloader.GraphicLoader.createIcon;
 import static java.awt.Color.black;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -39,28 +61,19 @@ public class CPanel extends JPanel {
     private boolean opened;
 
     /**
-     * @todo Javadoc
-     * @param a
-     * @param Type
+     * Creates a new CPanel object. A CPanel is a JPanel that holds all
+     * information about a cipher. Here the user can change the configuration
+     * for encryption and decryption.
+     *
+     * @throws java.lang.InstantiationException
+     * @throws java.lang.IllegalAccessException
+     * @param a the application definition
+     * @param Type the class of the cipher to be shown
      */
-    public CPanel(Application a, Class<? extends CCipher> Type) {
+    public CPanel(Application a, Class<? extends CCipher> Type) throws InstantiationException, IllegalAccessException {
         application = a;
         menu = new JPanel();
-        try {
-            content = Type.newInstance();
-        } catch (InstantiationException ex) {
-            InstantiationException n = new InstantiationException("ERROR_FATAL 0: Class object cannot be instantiated");
-            n.setStackTrace(ex.getStackTrace());
-            application.getMainRoutine().logException(n);
-            while (true) {
-            }
-        } catch (IllegalAccessException ex) {
-            IllegalAccessException n = new IllegalAccessException("ERROR_FATAL 1: No access to constructor");
-            n.setStackTrace(ex.getStackTrace());
-            application.getMainRoutine().logException(n);
-            while (true) {
-            }
-        }
+        content = Type.newInstance();
         hide = new JButton();
         opened = true;
         iClose = createIcon("icons:left");
@@ -74,7 +87,7 @@ public class CPanel extends JPanel {
         JButton moveUp = new JButton();
         JButton moveDown = new JButton();
         JButton close = new JButton();
-        close.addActionListener(new CloseAction(this));
+        close.addActionListener(new CloseAction());
         hide.addActionListener(new HideAction());
         Dimension size = new Dimension(16, 16);
         moveUp.setIcon(createIcon("icons:up"));
@@ -143,7 +156,7 @@ public class CPanel extends JPanel {
     /**
      * Indicates weather the Encryption Field is valid or invalid
      *
-     * @return true if field is valid, false otherwise
+     * @return {@code true} if field is valid, {@code false} otherwise
      */
     public boolean cryptIsValid() {
         return content.cryptIsValid();
@@ -203,21 +216,18 @@ public class CPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            setOpened(!opened);
+            CPanel.this.setOpened(!opened);
         }
     }
 
     private class CloseAction implements ActionListener {
 
-        private final CPanel self;
-
-        CloseAction(CPanel self) {
-            this.self = self;
+        CloseAction() {
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            application.getFrame().removeCrypt(self);
+            application.getFrame().removeCrypt(CPanel.this);
         }
     }
 
