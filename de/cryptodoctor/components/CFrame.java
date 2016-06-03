@@ -26,13 +26,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
-import org.jdesktop.layout.GroupLayout;
-import static org.jdesktop.layout.GroupLayout.DEFAULT_SIZE;
-import static org.jdesktop.layout.GroupLayout.LEADING;
-import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
-import org.jdesktop.layout.GroupLayout.ParallelGroup;
-import org.jdesktop.layout.GroupLayout.SequentialGroup;
-import static org.jdesktop.layout.GroupLayout.TRAILING;
+import javax.swing.GroupLayout;
+import static javax.swing.GroupLayout.Alignment.LEADING;
+import static javax.swing.GroupLayout.Alignment.TRAILING;
+import static javax.swing.GroupLayout.DEFAULT_SIZE;
+import static javax.swing.GroupLayout.PREFERRED_SIZE;
+import javax.swing.GroupLayout.ParallelGroup;
+import javax.swing.GroupLayout.SequentialGroup;
 
 /**
  * @todo Javadoc
@@ -108,8 +108,8 @@ public class CFrame extends JFrame {
         //list
         sList.setViewportView(list);
         sList.setBorder(null);
-        layout.setHorizontalGroup(layout.createParallelGroup().add(0, 0, 0));
-        layout.setVerticalGroup(layout.createSequentialGroup().add(0, 0, 0));
+        layout.setHorizontalGroup(layout.createParallelGroup().addGap(0));
+        layout.setVerticalGroup(layout.createSequentialGroup().addGap(0));
         list.setLayout(layout);
         //textfields
         encText.setText("Originaltext");
@@ -127,9 +127,9 @@ public class CFrame extends JFrame {
         GroupLayout lCrypt = new GroupLayout(crypt);
         crypt.setLayout(lCrypt);
         lCrypt.setHorizontalGroup(lCrypt.createParallelGroup()
-                .add(split, 0, 468, MAX_VALUE));
+                .addComponent(split, 0, 468, MAX_VALUE));
         lCrypt.setVerticalGroup(lCrypt.createParallelGroup()
-                .add(split, 0, 260, MAX_VALUE));
+                .addComponent(split, 0, 260, MAX_VALUE));
         //tabs
         ActionListener changeMode = new ChangeModeAction();
         ButtonGroup group = new ButtonGroup();
@@ -143,39 +143,39 @@ public class CFrame extends JFrame {
         GroupLayout lTabs = new GroupLayout(tabs);
         tabs.setLayout(lTabs);
         lTabs.setHorizontalGroup(lTabs.createSequentialGroup()
-                .add(tEnc, DEFAULT_SIZE, 234, MAX_VALUE)
-                .add(tDec, DEFAULT_SIZE, 234, MAX_VALUE));
+                .addComponent(tEnc, DEFAULT_SIZE, 234, MAX_VALUE)
+                .addComponent(tDec, DEFAULT_SIZE, 234, MAX_VALUE));
         lTabs.setVerticalGroup(
                 lTabs.createParallelGroup()
-                .add(tEnc)
-                .add(tDec));
+                .addComponent(tEnc)
+                .addComponent(tDec));
         //frame
         GroupLayout lFrame = new GroupLayout(getContentPane());
         getContentPane().setLayout(lFrame);
         lFrame.setHorizontalGroup(lFrame.createSequentialGroup()//720
-                .add(6, 6, 6)//6
-                .add(lFrame.createParallelGroup()//708
-                        .add(tabs, 0, 708, MAX_VALUE)//708
-                        .add(lFrame.createSequentialGroup()//708
-                                .add(crypt, 0, 468, MAX_VALUE)//468
-                                .add(6, 6, 6)//6
-                                .add(lFrame.createParallelGroup(LEADING, false)//234
-                                        .add(bNew, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
-                                        .add(lFrame.createParallelGroup(TRAILING)//234
-                                                .add(sList, 234, 234, 234)
-                                                .add(bEnter, 20, 20, 20)))))
-                .add(6, 6, 6));//6
+                .addGap(6)//6
+                .addGroup(lFrame.createParallelGroup()//708
+                        .addComponent(tabs, 0, 708, MAX_VALUE)//708
+                        .addGroup(lFrame.createSequentialGroup()//708
+                                .addComponent(crypt, 0, 468, MAX_VALUE)//468
+                                .addGap(6)//6
+                                .addGroup(lFrame.createParallelGroup(LEADING, false)//234
+                                        .addComponent(bNew, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
+                                        .addGroup(lFrame.createParallelGroup(TRAILING)//234
+                                                .addComponent(sList, 234, 234, 234)
+                                                .addComponent(bEnter, 20, 20, 20)))))
+                .addGap(6));//6
         lFrame.setVerticalGroup(lFrame.createSequentialGroup()//360
-                .add(6, 6, 6)//6
-                .add(tabs, 29, 29, 29)//29
-                .add(6, 6, 6)//6
-                .add(lFrame.createParallelGroup()//313
-                        .add(crypt)//313
-                        .add(lFrame.createSequentialGroup()//313
-                                .add(bNew, 20, 20, 20)
-                                .add(sList, 0, 266, MAX_VALUE)//288
-                                .add(bEnter, 20, 20, 20)))//25
-                .add(6, 6, 6));//6
+                .addGap(6)//6
+                .addComponent(tabs, 29, 29, 29)//29
+                .addGap(6)//6
+                .addGroup(lFrame.createParallelGroup()//313
+                        .addComponent(crypt)//313
+                        .addGroup(lFrame.createSequentialGroup()//313
+                                .addComponent(bNew, 20, 20, 20)
+                                .addComponent(sList, 0, 266, MAX_VALUE)//288
+                                .addComponent(bEnter, 20, 20, 20)))//25
+                .addGap(6));//6
         pack();
     }
 
@@ -204,21 +204,21 @@ public class CFrame extends JFrame {
      */
     public void updateList() {
         list.setLayout(null);
-        ParallelGroup horiz = layout.createParallelGroup().add(0, 0, 0);
-        SequentialGroup vertic = layout.createSequentialGroup().add(0, 0, 0);
+        ParallelGroup horiz = layout.createParallelGroup().addGap(0);
+        SequentialGroup vertic = layout.createSequentialGroup().addGap(0);
         List<CPanel> crypts = tEnc.isSelected() ? encrypts : decrypts;
         list.removeAll();
         if (!crypts.isEmpty()) {
             JPanel panel = new JPanel();
             panel.setBackground(black);
             panel.setBorder(null);
-            horiz = horiz.add(panel);
-            vertic = vertic.add(panel, 1, 1, 1);
+            horiz = horiz.addComponent(panel);
+            vertic = vertic.addComponent(panel, 1, 1, 1);
             list.add(panel);
         }
         for (CPanel c : crypts) {
-            horiz = horiz.add(c);
-            vertic = vertic.add(c);
+            horiz = horiz.addComponent(c);
+            vertic = vertic.addComponent(c);
             list.add(c);
         }
         layout.setHorizontalGroup(horiz);

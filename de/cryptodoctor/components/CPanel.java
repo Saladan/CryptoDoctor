@@ -20,8 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.border.Border;
-import org.jdesktop.layout.GroupLayout;
-import static org.jdesktop.layout.GroupLayout.CENTER;
+import javax.swing.GroupLayout;
+import static javax.swing.GroupLayout.Alignment.CENTER;
 
 /**
  * @todo Javadoc
@@ -108,24 +108,24 @@ public class CPanel extends JPanel {
         menu.setLayout(lMenu);
         lMenu.setHorizontalGroup(
                 lMenu.createSequentialGroup()
-                .add(2, 2, 2)
-                .add(name, 0, 0, MAX_VALUE)
-                .add(2, 2, 2)
-                .add(control, 64, 64, 64)
-                .add(2, 2, 2));
+                .addGap(2)
+                .addComponent(name, 0, 0, MAX_VALUE)
+                .addGap(2)
+                .addComponent(control, 64, 64, 64)
+                .addGap(2));
         lMenu.setVerticalGroup(
                 lMenu.createParallelGroup(CENTER)
-                .add(name, 20, 20, 20)
-                .add(control, 16, 16, 16));
+                .addComponent(name, 20, 20, 20)
+                .addComponent(control, 16, 16, 16));
         GroupLayout layout = new GroupLayout(this);
         layout.setHorizontalGroup(
                 layout.createParallelGroup()
-                .add(menu)
-                .add(content));
+                .addComponent(menu)
+                .addComponent(content));
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                .add(menu)
-                .add(content));
+                .addComponent(menu)
+                .addComponent(content));
         setLayout(layout);
         setOpened(true);
     }
