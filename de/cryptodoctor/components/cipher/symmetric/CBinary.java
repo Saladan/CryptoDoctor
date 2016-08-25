@@ -27,15 +27,13 @@ import de.cryptodoctor.components.CCipher;
 import static java.lang.Math.min;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
+import javax.swing.GroupLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
-import org.jdesktop.layout.GroupLayout;
-import static org.jdesktop.layout.GroupLayout.LEADING;
-import static org.jdesktop.layout.GroupLayout.PREFERRED_SIZE;
 
 /**
  * @todo Javadoc
@@ -72,20 +70,20 @@ public class CBinary extends CCipher {
         GroupLayout layout = new GroupLayout(this);
         setLayout(layout);
         layout.setHorizontalGroup(layout.createSequentialGroup()
-                .add(6, 6, 6)
-                .add(layout.createParallelGroup(LEADING)
-                        .add(labelC)
-                        .add(editC)
-                        .add(checkC))
-                .add(6, 6, 6));
+                .addGap(6)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(labelC)
+                        .addComponent(editC)
+                        .addComponent(checkC))
+                .addGap(6));
         layout.setVerticalGroup(layout.createSequentialGroup()
-                .add(12, 12, 12)
-                .add(labelC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
-                .add(3, 3, 3)
-                .add(editC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
-                .add(6, 6, 6)
-                .add(checkC, PREFERRED_SIZE, PREFERRED_SIZE, PREFERRED_SIZE)
-                .add(6, 6, 6));
+                .addGap(12)
+                .addComponent(labelC, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addGap(3)
+                .addComponent(editC, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addGap(6)
+                .addComponent(checkC, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addGap(6));
         super.initHeight(27 + labelC.getPreferredSize().height + editC.getPreferredSize().height + checkC.getPreferredSize().height);
     }
 
